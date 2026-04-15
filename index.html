@@ -196,6 +196,7 @@ function ds(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')
 function changeMonth(n){curM+=n;if(curM>11){curM=0;curY++;}if(curM<0){curM=11;curY--;}render();window.scrollTo({top:0,behavior:'smooth'});}
 function render(){
  const mcHeader=evs.filter(e=>e.date.startsWith(curY+'-'+String(curM+1).padStart(2,'0'))).length;
+const mcHeader=evs.filter(e=>e.date.startsWith(curY+'-'+String(curM+1).padStart(2,'0'))).length;
 document.getElementById('topCount').textContent=String(mcHeader).padStart(3,'0');
   document.getElementById('topYear').textContent=today.getFullYear()+'/'+(today.getFullYear()+1);
   document.getElementById('monthName').textContent=MO[curM];
