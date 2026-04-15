@@ -145,7 +145,46 @@ body{background:#E84C1E;color:#111;font-family:'IBM Plex Mono',monospace;min-hei
 </div>
 <div class="toast" id="toast"></div>
 <script>
-let evs=JSON.parse(localStorage.getItem('tcV8')||'[]');
+const PRELOAD=[
+  {id:'p1',date:'2026-04-24',venue:'',city:'Lugo',group:'Carlos Ares',fac:null},
+  {id:'p2',date:'2026-04-25',venue:'',city:'A Coruña',group:'Carlos Ares',fac:null},
+  {id:'p3',date:'2026-04-26',venue:'',city:'A Coruña',group:'Carlos Ares',fac:null},
+  {id:'p4',date:'2026-04-27',venue:'',city:'A Coruña',group:'Carlos Ares',fac:null},
+  {id:'p5',date:'2026-05-02',venue:'',city:'Murcia',group:'Carlos Ares',fac:null},
+  {id:'p6',date:'2026-05-08',venue:'',city:'Cascante (Navarra)',group:'Carlos Ares',fac:null},
+  {id:'p7',date:'2026-05-09',venue:'',city:'Toledo',group:'Carlos Ares',fac:null},
+  {id:'p8',date:'2026-05-15',venue:'',city:'Armilla (Granada)',group:'Carlos Ares',fac:null},
+  {id:'p9',date:'2026-05-16',venue:'',city:'Sevilla',group:'Carlos Ares',fac:null},
+  {id:'p10',date:'2026-05-22',venue:'',city:'Ourense',group:'Carlos Ares',fac:null},
+  {id:'p11',date:'2026-05-23',venue:'',city:'Málaga',group:'Carlos Ares',fac:null},
+  {id:'p12',date:'2026-05-28',venue:'',city:'Donosti',group:'Carlos Ares',fac:null},
+  {id:'p13',date:'2026-05-29',venue:'',city:'Valencia',group:'Carlos Ares',fac:null},
+  {id:'p14',date:'2026-06-06',venue:'',city:'Zamora',group:'Carlos Ares',fac:null},
+  {id:'p15',date:'2026-06-13',venue:'',city:'Baeza (Jaén)',group:'Carlos Ares',fac:null},
+  {id:'p16',date:'2026-06-18',venue:'',city:'Santiago de Compostela',group:'Carlos Ares',fac:null},
+  {id:'p17',date:'2026-06-19',venue:'',city:'Albacete',group:'Carlos Ares',fac:null},
+  {id:'p18',date:'2026-06-20',venue:'',city:'Girona',group:'Carlos Ares',fac:null},
+  {id:'p19',date:'2026-06-26',venue:'',city:'La Vila Joiosa (Alicante)',group:'Carlos Ares',fac:null},
+  {id:'p20',date:'2026-07-04',venue:'',city:'La Solana (Ciudad Real)',group:'Carlos Ares',fac:null},
+  {id:'p21',date:'2026-07-16',venue:'',city:'Benicassim (Castellón)',group:'Carlos Ares',fac:null},
+  {id:'p22',date:'2026-07-18',venue:'',city:'Vilagarcía de Arousa (Pontevedra)',group:'Carlos Ares',fac:null},
+  {id:'p23',date:'2026-07-23',venue:'',city:'Lanuza (Huesca)',group:'Carlos Ares',fac:null},
+  {id:'p24',date:'2026-07-25',venue:'',city:'San Fernando de Cádiz',group:'Carlos Ares',fac:null},
+  {id:'p25',date:'2026-07-31',venue:'',city:'Borja (Zaragoza)',group:'Carlos Ares',fac:null},
+  {id:'p26',date:'2026-08-01',venue:'',city:'Santander',group:'Carlos Ares',fac:null},
+  {id:'p27',date:'2026-08-02',venue:'',city:'Benidorm (Alicante)',group:'Carlos Ares',fac:null},
+  {id:'p28',date:'2026-08-07',venue:'',city:'Aranda de Duero (Burgos)',group:'Carlos Ares',fac:null},
+  {id:'p29',date:'2026-08-08',venue:'',city:'Zamora',group:'Carlos Ares',fac:null},
+  {id:'p30',date:'2026-08-10',venue:'',city:'Luanco (Asturias)',group:'Carlos Ares',fac:null},
+  {id:'p31',date:'2026-08-13',venue:'',city:'Gandía (Valencia)',group:'Carlos Ares',fac:null},
+  {id:'p32',date:'2026-08-21',venue:'',city:'Ezcaray (La Rioja)',group:'Carlos Ares',fac:null},
+  {id:'p33',date:'2026-08-22',venue:'',city:'Pontevedra',group:'Carlos Ares',fac:null},
+  {id:'p34',date:'2026-08-23',venue:'',city:'San Vicente (Pontevedra)',group:'Carlos Ares',fac:null},
+  {id:'p35',date:'2026-08-27',venue:'',city:'Cartagena',group:'Carlos Ares',fac:null},
+];
+let saved=JSON.parse(localStorage.getItem('tcV8')||'null');
+if(!saved){saved=PRELOAD;localStorage.setItem('tcV8',JSON.stringify(saved));}
+let evs=saved;
 let actId=null,lines=[];
 const today=new Date();today.setHours(0,0,0,0);
 let curY=today.getFullYear(),curM=today.getMonth();
@@ -212,7 +251,7 @@ function openInv(id,e){
   const d=new Date(ev.date+'T00:00:00');
   document.getElementById('invTitle').textContent=ev.venue.toUpperCase()+' · '+MS[d.getMonth()]+' '+String(d.getDate()).padStart(2,'0');
   if(ev.fac){document.getElementById('i_artist').value=ev.fac.artist||'';document.getElementById('i_nif').value=ev.fac.nif||'';document.getElementById('i_address').value=ev.fac.address||'';document.getElementById('i_client').value=ev.fac.client||'';document.getElementById('i_cnif').value=ev.fac.cnif||'';document.getElementById('i_num').value=ev.fac.num||'';document.getElementById('i_iva').value=ev.fac.iva??21;lines=ev.fac.lines?JSON.parse(JSON.stringify(ev.fac.lines)):[];}
-  else{['i_artist','i_nif','i_address','i_client','i_cnif'].forEach(x=>document.getElementById(x).value='');document.getElementById('i_num').value='FAC-'+ev.date.replace(/-/g,'');document.getElementById('i_iva').value=21;lines=[{desc:'Actuación en '+ev.venue,price:0}];}
+  else{['i_artist','i_nif','i_address','i_client','i_cnif'].forEach(x=>document.getElementById(x).value='');document.getElementById('i_num').value='FAC-'+ev.date.replace(/-/g,'');document.getElementById('i_iva').value=21;lines=[{desc:'Actuación en '+ev.city,price:0}];}
   renderLines();document.getElementById('invOverlay').classList.add('open');
 }
 function renderLines(){const c=document.getElementById('liCont');c.innerHTML='';lines.forEach((l,i)=>{const r=document.createElement('div');r.className='li-row';r.innerHTML=`<input type="text" class="li-in" placeholder="Concepto" value="${l.desc||''}" oninput="lines[${i}].desc=this.value;saveFac()"><input type="number" class="li-in li-r" placeholder="€" value="${l.price||''}" oninput="lines[${i}].price=parseFloat(this.value)||0;calcTotal();saveFac()"><button class="btn-rm" onclick="rmLine(${i})">×</button>`;c.appendChild(r);});calcTotal();}
@@ -220,7 +259,7 @@ function rmLine(i){lines.splice(i,1);renderLines();saveFac();}
 function addLine(){lines.push({desc:'',price:0});renderLines();}
 function calcTotal(){const iva=parseFloat(document.getElementById('i_iva').value)||0;const base=lines.reduce((s,l)=>s+(parseFloat(l.price)||0),0);document.getElementById('invTotal').textContent='€'+(base*(1+iva/100)).toFixed(2);}
 function saveFac(){if(!actId)return;const ev=evs.find(x=>x.id===actId);if(!ev)return;ev.fac={artist:document.getElementById('i_artist').value,nif:document.getElementById('i_nif').value,address:document.getElementById('i_address').value,client:document.getElementById('i_client').value,cnif:document.getElementById('i_cnif').value,num:document.getElementById('i_num').value,iva:parseFloat(document.getElementById('i_iva').value)||21,lines:JSON.parse(JSON.stringify(lines))};sv();}
-function dlPDF(){saveFac();const ev=evs.find(x=>x.id===actId);const d=new Date(ev.date+'T00:00:00');const {jsPDF}=window.jspdf;const doc=new jsPDF({unit:'mm',format:'a4'});const W=210,PL=20,PR=20,CW=W-PL-PR;doc.setFillColor(232,76,30);doc.rect(0,0,W,52,'F');doc.setFillColor(17,17,17);doc.rect(0,52,W,2,'F');doc.setTextColor(17,17,17);doc.setFont('helvetica','bold');doc.setFontSize(30);doc.text('FACTURA',PL,24);doc.setFontSize(10);doc.setFont('helvetica','normal');doc.text('Nº '+(document.getElementById('i_num').value||'—'),PL,35);doc.text(String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear(),PL,42);doc.setFont('helvetica','bold');doc.setFontSize(11);doc.text((ev.venue+' · '+ev.city).toUpperCase(),W-PR,32,{align:'right'});let y=70;const artist=document.getElementById('i_artist').value||'—';const nif=document.getElementById('i_nif').value||'—';const address=document.getElementById('i_address').value||'—';const client=document.getElementById('i_client').value||'—';const cnif=document.getElementById('i_cnif').value||'—';doc.setFillColor(245,245,245);doc.rect(PL,y-5,CW/2-4,32,'F');doc.rect(W/2+2,y-5,CW/2-4,32,'F');doc.setFont('helvetica','bold');doc.setFontSize(7);doc.setTextColor(136,136,136);doc.text('ARTISTA / EMISOR',PL+3,y+2);doc.text('CLIENTE / PROMOTOR',W/2+5,y+2);doc.setTextColor(17,17,17);doc.setFont('helvetica','bold');doc.setFontSize(10);doc.text(artist,PL+3,y+10);doc.setFont('helvetica','normal');doc.setFontSize(9);doc.text('NIF: '+nif,PL+3,y+17);doc.text(address,PL+3,y+23,{maxWidth:CW/2-10});doc.setFont('helvetica','bold');doc.setFontSize(10);doc.text(client,W/2+5,y+10);doc.setFont('helvetica','normal');doc.setFontSize(9);doc.text('NIF: '+cnif,W/2+5,y+17);y+=44;doc.setFillColor(17,17,17);doc.rect(PL,y,CW,8,'F');doc.setTextColor(255,255,255);doc.setFont('helvetica','bold');doc.setFontSize(8);doc.text('CONCEPTO',PL+4,y+5.5);doc.text('IMPORTE',W-PR-4,y+5.5,{align:'right'});y+=10;let base=0;doc.setTextColor(17,17,17);lines.forEach((l,i)=>{const b=i%2===0?255:248;doc.setFillColor(b,b,b);doc.rect(PL,y-4,CW,8,'F');doc.setFont('helvetica','normal');doc.setFontSize(9);doc.text(l.desc||'—',PL+4,y+1);doc.text('€'+(parseFloat(l.price)||0).toFixed(2),W-PR-4,y+1,{align:'right'});base+=parseFloat(l.price)||0;y+=9;});y+=6;const iva=parseFloat(document.getElementById('i_iva').value)||21;const ivaA=base*iva/100,tot=base+ivaA;doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(17,17,17);doc.text('Base imponible',PL+4,y);doc.text('€'+base.toFixed(2),W-PR-4,y,{align:'right'});y+=8;doc.setTextColor(232,76,30);doc.text('IVA '+iva+'%',PL+4,y);doc.text('€'+ivaA.toFixed(2),W-PR-4,y,{align:'right'});y+=10;doc.setFillColor(17,17,17);doc.rect(PL,y-4,CW,12,'F');doc.setTextColor(255,255,255);doc.setFont('helvetica','bold');doc.setFontSize(13);doc.text('TOTAL',PL+4,y+4);doc.text('€'+tot.toFixed(2),W-PR-4,y+4,{align:'right'});doc.setFillColor(232,76,30);doc.rect(0,285,W,12,'F');doc.setTextColor(17,17,17);doc.setFont('helvetica','bold');doc.setFontSize(7);doc.text('TOUR CALENDAR',PL,292);doc.setFont('helvetica','normal');doc.text('Generado el '+new Date().toLocaleDateString('es-ES'),W-PR,292,{align:'right'});doc.save('factura_'+ev.venue.replace(/\s+/g,'_').toLowerCase()+'_'+ev.date+'.pdf');toast('PDF descargado ✓');}
+function dlPDF(){saveFac();const ev=evs.find(x=>x.id===actId);const d=new Date(ev.date+'T00:00:00');const {jsPDF}=window.jspdf;const doc=new jsPDF({unit:'mm',format:'a4'});const W=210,PL=20,PR=20,CW=W-PL-PR;doc.setFillColor(232,76,30);doc.rect(0,0,W,52,'F');doc.setFillColor(17,17,17);doc.rect(0,52,W,2,'F');doc.setTextColor(17,17,17);doc.setFont('helvetica','bold');doc.setFontSize(30);doc.text('FACTURA',PL,24);doc.setFontSize(10);doc.setFont('helvetica','normal');doc.text('Nº '+(document.getElementById('i_num').value||'—'),PL,35);doc.text(String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear(),PL,42);doc.setFont('helvetica','bold');doc.setFontSize(11);doc.text((ev.group+' · '+ev.city).toUpperCase(),W-PR,32,{align:'right'});let y=70;const artist=document.getElementById('i_artist').value||'—';const nif=document.getElementById('i_nif').value||'—';const address=document.getElementById('i_address').value||'—';const client=document.getElementById('i_client').value||'—';const cnif=document.getElementById('i_cnif').value||'—';doc.setFillColor(245,245,245);doc.rect(PL,y-5,CW/2-4,32,'F');doc.rect(W/2+2,y-5,CW/2-4,32,'F');doc.setFont('helvetica','bold');doc.setFontSize(7);doc.setTextColor(136,136,136);doc.text('ARTISTA / EMISOR',PL+3,y+2);doc.text('CLIENTE / PROMOTOR',W/2+5,y+2);doc.setTextColor(17,17,17);doc.setFont('helvetica','bold');doc.setFontSize(10);doc.text(artist,PL+3,y+10);doc.setFont('helvetica','normal');doc.setFontSize(9);doc.text('NIF: '+nif,PL+3,y+17);doc.text(address,PL+3,y+23,{maxWidth:CW/2-10});doc.setFont('helvetica','bold');doc.setFontSize(10);doc.text(client,W/2+5,y+10);doc.setFont('helvetica','normal');doc.setFontSize(9);doc.text('NIF: '+cnif,W/2+5,y+17);y+=44;doc.setFillColor(17,17,17);doc.rect(PL,y,CW,8,'F');doc.setTextColor(255,255,255);doc.setFont('helvetica','bold');doc.setFontSize(8);doc.text('CONCEPTO',PL+4,y+5.5);doc.text('IMPORTE',W-PR-4,y+5.5,{align:'right'});y+=10;let base=0;doc.setTextColor(17,17,17);lines.forEach((l,i)=>{const b=i%2===0?255:248;doc.setFillColor(b,b,b);doc.rect(PL,y-4,CW,8,'F');doc.setFont('helvetica','normal');doc.setFontSize(9);doc.text(l.desc||'—',PL+4,y+1);doc.text('€'+(parseFloat(l.price)||0).toFixed(2),W-PR-4,y+1,{align:'right'});base+=parseFloat(l.price)||0;y+=9;});y+=6;const iva=parseFloat(document.getElementById('i_iva').value)||21;const ivaA=base*iva/100,tot=base+ivaA;doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(17,17,17);doc.text('Base imponible',PL+4,y);doc.text('€'+base.toFixed(2),W-PR-4,y,{align:'right'});y+=8;doc.setTextColor(232,76,30);doc.text('IVA '+iva+'%',PL+4,y);doc.text('€'+ivaA.toFixed(2),W-PR-4,y,{align:'right'});y+=10;doc.setFillColor(17,17,17);doc.rect(PL,y-4,CW,12,'F');doc.setTextColor(255,255,255);doc.setFont('helvetica','bold');doc.setFontSize(13);doc.text('TOTAL',PL+4,y+4);doc.text('€'+tot.toFixed(2),W-PR-4,y+4,{align:'right'});doc.setFillColor(232,76,30);doc.rect(0,285,W,12,'F');doc.setTextColor(17,17,17);doc.setFont('helvetica','bold');doc.setFontSize(7);doc.text('TOUR CALENDAR',PL,292);doc.setFont('helvetica','normal');doc.text('Generado el '+new Date().toLocaleDateString('es-ES'),W-PR,292,{align:'right'});doc.save('factura_carlos_ares_'+ev.date+'.pdf');toast('PDF descargado ✓');}
 render();
 </script>
 </body>
