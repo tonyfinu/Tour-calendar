@@ -1,1 +1,629 @@
-Calendario-mobile.html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Calendario">
+<title>Calendario — Gira 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;background:#0A0A0A;font-family:"Archivo",Helvetica,sans-serif;color:#0A0A0A;overflow:hidden;}
+.screen{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;display:none;flex-direction:column;}
+.screen.active{display:flex;}
+.mono{font-family:"JetBrains Mono",monospace;}
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;}
+.rule{height:1px;background:#0A0A0A;width:100%;}
+.rule-light{height:1px;background:rgba(10,10,10,0.14);width:100%;}
+
+/* ── HOME ── */
+#s-home{background:#FF4B1F;}
+.home-total{font-weight:900;font-size:min(52vw,210px);line-height:0.85;letter-spacing:-0.06em;color:#0A0A0A;padding:0 14px;cursor:pointer;margin-top:-4px;}
+.home-list-wrap{position:relative;}
+.home-list{max-height:160px;overflow-y:scroll;scrollbar-width:none;-webkit-overflow-scrolling:touch;font-family:"JetBrains Mono",monospace;font-size:11px;line-height:1.7;letter-spacing:0.3px;}
+.home-list::-webkit-scrollbar{display:none;}
+.home-list-fade-top{position:absolute;top:0;left:0;right:0;height:36px;background:linear-gradient(to top,transparent,#FF4B1F);pointer-events:none;z-index:2;}
+.home-list-fade-bot{position:absolute;bottom:0;left:0;right:0;height:36px;background:linear-gradient(to bottom,transparent,#FF4B1F);pointer-events:none;z-index:2;}
+.home-list-row{display:flex;justify-content:space-between;cursor:pointer;}
+.home-next-day{font-weight:900;font-size:min(32vw,120px);line-height:0.85;letter-spacing:-0.04em;padding:0 14px;cursor:pointer;margin-top:-4px;}
+.home-next-month{font-size:min(8vw,32px);font-weight:700;vertical-align:top;margin-left:6px;letter-spacing:0;}
+.nav-bar{display:flex;justify-content:space-between;padding:14px 16px;background:#0A0A0A;color:#FF4B1F;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:1.2px;cursor:pointer;margin:20px 20px 0;}
+
+/* ── LIST ── */
+#s-list{background:#EDE7D9;}
+.filter-chip{padding:5px 12px;border:1px solid #0A0A0A;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:1px;cursor:pointer;text-transform:uppercase;background:transparent;color:#0A0A0A;display:inline-block;}
+.filter-chip.on{background:#0A0A0A;color:#FF4B1F;}
+.list-row{padding:12px 20px;border-bottom:1px solid rgba(10,10,10,0.12);display:grid;grid-template-columns:48px 1fr auto;gap:12px;cursor:pointer;align-items:center;}
+.list-day{font-weight:900;font-size:36px;line-height:0.9;letter-spacing:-1px;}
+.list-city{font-weight:700;font-size:17px;letter-spacing:-0.3px;}
+.list-venue{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:0.6px;color:rgba(10,10,10,0.5);margin-top:2px;}
+.badge{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:1px;}
+.badge.conf{color:#2d7d46;}
+.badge.res{color:#FF4B1F;}
+.badge.past{color:rgba(10,10,10,0.4);}
+.month-header{display:flex;justify-content:space-between;align-items:baseline;padding:12px 20px 0;background:#EDE7D9;position:sticky;top:0;z-index:5;}
+
+/* ── DETAIL ── */
+#s-detail{background:#F5F1E6;}
+.detail-day{font-weight:900;font-size:min(44vw,160px);line-height:0.82;letter-spacing:-0.04em;padding:0 20px;margin-top:-4px;}
+.detail-month{font-weight:700;font-size:min(9vw,34px);letter-spacing:-1px;padding:0 20px;margin-top:-4px;}
+.detail-city{font-weight:900;line-height:1;letter-spacing:-0.03em;}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;padding:12px 20px 0;}
+.stat-cell{padding:10px 0;border-bottom:1px solid rgba(10,10,10,0.12);}
+.stat-label{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:rgba(10,10,10,0.5);}
+.stat-val{font-weight:700;font-size:20px;letter-spacing:-0.5px;margin-top:3px;}
+.cta-btn{padding:18px;background:#0A0A0A;color:#FF4B1F;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:1.6px;text-align:center;cursor:pointer;font-weight:700;margin:0 20px 40px;}
+
+/* ── FACTURA ── */
+#s-factura{background:#fff;}
+.fac-title{font-weight:900;font-size:44px;letter-spacing:-1.5px;line-height:1;}
+.fac-num{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:0.6px;color:rgba(10,10,10,0.6);}
+.fac-section{padding:14px 20px 0;}
+.fac-party-label{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:rgba(10,10,10,0.5);margin-bottom:5px;}
+.fac-party-name{font-weight:800;font-size:14px;margin-bottom:4px;}
+.fac-party-body{font-family:"JetBrains Mono",monospace;font-size:10px;line-height:1.7;color:rgba(10,10,10,0.65);}
+.fac-input{width:100%;border:none;border-bottom:1px solid #0A0A0A;background:transparent;font-family:"Archivo",sans-serif;font-size:14px;padding:4px 0;outline:none;color:#0A0A0A;}
+.fac-amount{width:100%;border:none;border-bottom:1px solid #0A0A0A;background:transparent;font-family:"Archivo",sans-serif;font-size:26px;font-weight:800;padding:4px 0;outline:none;color:#0A0A0A;letter-spacing:-1px;text-align:right;}
+.fac-toggle{padding:6px 12px;border:1px solid #0A0A0A;cursor:pointer;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:1px;background:transparent;color:#0A0A0A;display:inline-block;}
+.fac-toggle.on{background:#0A0A0A;color:#FF4B1F;}
+.fac-line{display:flex;justify-content:space-between;padding:6px 0;font-family:"JetBrains Mono",monospace;font-size:11px;}
+.fac-total-row{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0 0;}
+.fac-total-label{font-weight:900;font-size:22px;letter-spacing:-0.5px;}
+.fac-total-val{font-weight:900;font-size:28px;letter-spacing:-1px;}
+
+/* ── STATS ── */
+#s-stats{background:#0A0A0A;color:#EDE7D9;}
+#s-stats .rule{background:#EDE7D9;}
+#s-stats .eyebrow{color:rgba(237,231,217,0.6);}
+.stats-total{font-weight:900;font-size:min(58vw,220px);line-height:0.82;letter-spacing:-0.06em;color:#FF4B1F;padding:0 20px;margin-top:-6px;}
+.stats-orange-band{background:#FF4B1F;color:#0A0A0A;padding:18px 20px;margin-top:14px;}
+.stats-big{font-weight:900;font-size:min(22vw,82px);letter-spacing:-0.04em;line-height:0.9;}
+.bar-wrap{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.bar-label{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:0.8px;color:rgba(237,231,217,0.5);width:56px;flex-shrink:0;}
+.bar-track{flex:1;height:8px;background:rgba(237,231,217,0.1);}
+.bar-fill{height:100%;background:#FF4B1F;}
+.bar-count{font-weight:700;font-size:14px;letter-spacing:-0.5px;width:22px;text-align:right;color:#EDE7D9;}
+.city-row{display:flex;justify-content:space-between;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:0.4px;line-height:1.9;}
+
+/* ── SHARED ── */
+.screen-top{display:flex;justify-content:space-between;align-items:center;padding:14px 20px 0;}
+.back-btn{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;cursor:pointer;}
+.section-pad{padding:0 20px;}
+.pb40{padding-bottom:40px;}
+.safe-bottom{height:env(safe-area-inset-bottom,20px);}
+</style>
+</head>
+<body>
+
+<!-- ═══ HOME ═══════════════════════════════════════════════ -->
+<div id="s-home" class="screen active" data-screen-label="01 Home">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:54px 20px 0;">
+    <span class="eyebrow">Gira 2026–2027</span>
+    <span class="eyebrow" id="h-upcoming"></span>
+  </div>
+  <div style="padding:12px 20px 0;"><div class="rule"></div>
+    <div style="display:flex;justify-content:space-between;padding:8px 0 4px;">
+      <span class="eyebrow">Conciertos totales:</span>
+      <span class="eyebrow" onclick="goTo('s-stats')" style="cursor:pointer;">Stats →</span>
+    </div>
+  </div>
+  <div class="home-total" onclick="goTo('s-stats')" id="h-total"></div>
+  <div style="padding:16px 20px 0;">
+    <div class="rule"></div>
+    <div style="display:grid;grid-template-columns:56px 1fr;gap:12px;padding:10px 0 16px;">
+      <div class="mono" style="font-size:9px;letter-spacing:0.8px;line-height:1.4;">ENE 26<br>ENE 27</div>
+      <div class="home-list-wrap">
+        <div class="home-list-fade-top"></div>
+        <div class="home-list" id="h-list"></div>
+        <div class="home-list-fade-bot"></div>
+      </div>
+    </div>
+    <div class="rule"></div>
+  </div>
+  <div style="padding:14px 20px 4px;display:flex;justify-content:space-between;">
+    <span class="eyebrow">Siguiente:</span>
+    <span class="eyebrow" id="h-next-year"></span>
+  </div>
+  <div class="home-next-day" id="h-next-day" onclick="openNextDetail()"></div>
+  <div style="padding:8px 20px 0;display:flex;justify-content:space-between;align-items:baseline;">
+    <div style="font-weight:700;font-size:22px;letter-spacing:-0.5px;flex:1;margin-right:8px;" id="h-next-city"></div>
+    <div class="mono" style="font-size:10px;opacity:0.7;text-align:right;max-width:140px;" id="h-next-venue"></div>
+  </div>
+  <div style="flex:1;min-height:20px;"></div>
+  <div class="nav-bar">
+    <span onclick="goTo('s-list')">[ LISTA ]</span>
+    <span onclick="goTo('s-stats')">[ STATS ]</span>
+  </div>
+  <div class="safe-bottom"></div>
+</div>
+
+<!-- ═══ LIST ════════════════════════════════════════════════ -->
+<div id="s-list" class="screen" data-screen-label="02 Lista">
+  <div class="screen-top">
+    <span class="back-btn" onclick="goTo('s-home')">← ATRÁS</span>
+    <span class="eyebrow" id="l-count"></span>
+  </div>
+  <div style="padding:16px 20px 6px;">
+    <div style="font-weight:900;font-size:min(18vw,64px);line-height:0.88;letter-spacing:-0.03em;">Gira<br>2026–27.</div>
+  </div>
+  <div style="display:flex;gap:6px;padding:14px 20px 12px;flex-wrap:wrap;">
+    <span class="filter-chip on" data-f="PRÓXIMAS" onclick="setFilter(this)">Próximas</span>
+    <span class="filter-chip" data-f="PASADOS" onclick="setFilter(this)">Pasados</span>
+    <span class="filter-chip" data-f="TODOS" onclick="setFilter(this)">Todos</span>
+  </div>
+  <div class="rule"></div>
+  <div id="l-body" style="padding-bottom:40px;"></div>
+  <div class="safe-bottom"></div>
+</div>
+
+<!-- ═══ DETAIL ══════════════════════════════════════════════ -->
+<div id="s-detail" class="screen" data-screen-label="03 Detalle">
+  <div class="screen-top">
+    <span class="back-btn" onclick="goTo('s-list')">← ATRÁS</span>
+    <span class="eyebrow" id="d-year"></span>
+  </div>
+  <div style="padding:14px 20px 0;"><div class="rule"></div>
+    <div style="display:flex;justify-content:space-between;padding:8px 0 0;">
+      <span class="eyebrow">Fecha:</span>
+      <span class="badge" id="d-badge"></span>
+    </div>
+  </div>
+  <div class="detail-day" id="d-day"></div>
+  <div class="detail-month" id="d-month"></div>
+  <div style="padding:16px 20px 0;"><div class="rule"></div>
+    <div style="padding:10px 0 0;">
+      <span class="eyebrow">Ciudad:</span>
+      <div class="detail-city" id="d-city" style="margin-top:4px;padding:0;"></div>
+    </div>
+    <div style="padding:10px 0 0;">
+      <span class="eyebrow">Recinto:</span>
+      <div style="font-weight:600;font-size:18px;letter-spacing:-0.3px;margin-top:4px;" id="d-venue"></div>
+    </div>
+  </div>
+  <div style="padding:28px 20px 40px;">
+    <div class="rule" style="margin-bottom:16px;"></div>
+    <div class="cta-btn" style="margin:0;" onclick="goToFactura()">[ GENERAR FACTURA ]</div>
+  </div>
+  <div class="safe-bottom"></div>
+</div>
+
+<!-- ═══ FACTURA ═════════════════════════════════════════════ -->
+<div id="s-factura" class="screen" data-screen-label="04 Factura">
+  <div class="screen-top" style="background:#fff;">
+    <span class="back-btn" onclick="goTo('s-detail')">← ATRÁS</span>
+    <span class="eyebrow">Factura</span>
+  </div>
+  <div style="padding:14px 20px 0;background:#fff;">
+    <div class="rule"></div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:10px 0 6px;">
+      <div class="fac-title">FACTURA</div>
+      <div style="text-align:right;padding-top:4px;">
+        <div class="fac-party-label">Nº:</div>
+        <input class="fac-input" id="f-num" style="width:150px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.6px;">
+      </div>
+    </div>
+    <div class="rule"></div>
+  </div>
+  <div class="fac-section" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;background:#fff;">
+    <div>
+      <div class="fac-party-label">Emisor</div>
+      <div class="fac-party-name">Antonio Tamargo Rodríguez</div>
+      <div class="fac-party-body">NIF: 71678522B<br>C/ Altamirano 2, Int. 3ª<br>33003 Oviedo, Asturias</div>
+    </div>
+    <div>
+      <div class="fac-party-label">Pagador</div>
+      <div class="fac-party-name">BAOWATT SCCL</div>
+      <div class="fac-party-body">CIF: F02995165<br>C/ Can Massa, 33<br>17007 Girona</div>
+    </div>
+  </div>
+  <div style="background:#fff;padding:10px 20px 0;">
+    <div class="rule-light"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;">
+      <span class="fac-party-label">Fecha emisión:</span>
+      <span class="mono" style="font-size:11px;" id="f-date"></span>
+    </div>
+    <div class="rule-light"></div>
+    <div style="padding:10px 0;">
+      <div class="fac-party-label" style="margin-bottom:6px;">Concepto:</div>
+      <input class="fac-input" id="f-concepto">
+    </div>
+    <div class="rule-light"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0 6px;">
+      <span class="fac-party-label">Base imponible (€):</span>
+      <input class="fac-amount" id="f-base" type="number" placeholder="0" style="width:130px;" oninput="calcFactura()">
+    </div>
+    <div class="rule-light"></div>
+    <div style="display:flex;gap:8px;padding:10px 0;flex-wrap:wrap;">
+      <span class="fac-toggle on" id="t-iva" onclick="toggleFac('iva')">IVA 21%</span>
+      <span class="fac-toggle on" id="t-irpf" onclick="toggleFac('irpf')">IRPF -15%</span>
+    </div>
+    <div id="f-desglose"></div>
+    <div class="rule" style="margin:10px 0;"></div>
+    <div class="fac-total-row">
+      <span class="fac-total-label">TOTAL</span>
+      <span class="fac-total-val" id="f-total">0,00 €</span>
+    </div>
+  </div>
+  <div style="padding:24px 20px 10px;background:#fff;">
+    <div class="rule" style="margin-bottom:14px;"></div>
+    <div class="cta-btn" style="margin:0 0 10px;" onclick="exportarFactura()">[ EXPORTAR FACTURA PDF ]</div>
+  </div>
+  <div class="safe-bottom" style="background:#fff;"></div>
+</div>
+
+<!-- ═══ STATS ════════════════════════════════════════════════ -->
+<div id="s-stats" class="screen" data-screen-label="05 Stats">
+  <div class="screen-top">
+    <span class="back-btn" onclick="goTo('s-home')" style="color:#EDE7D9;">← ATRÁS</span>
+    <span class="eyebrow">Gira 26–27</span>
+  </div>
+  <div style="padding:14px 20px 0;">
+    <div class="rule"></div>
+    <div class="eyebrow" style="padding:8px 0 0;">Total conciertos:</div>
+  </div>
+  <div class="stats-total" id="st-total"></div>
+  <div class="stats-orange-band">
+    <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+      <span class="eyebrow">Confirmados:</span>
+      <span class="eyebrow">Reservados:</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;">
+      <div class="stats-big" id="st-conf"></div>
+      <div class="stats-big" id="st-res" style="opacity:0.5;"></div>
+    </div>
+  </div>
+  <div style="padding:18px 20px 0;">
+    <div class="eyebrow" style="margin-bottom:10px;">Conciertos por mes:</div>
+    <div id="st-bars"></div>
+  </div>
+  <div style="padding:16px 20px 10px;">
+    <div class="rule"></div>
+    <div class="eyebrow" style="padding:10px 0 8px;">Todas las ciudades:</div>
+    <div id="st-cities"></div>
+  </div>
+  <div style="padding:14px 20px 20px;">
+    <div class="rule"></div>
+    <div style="display:flex;justify-content:space-between;margin-top:10px;">
+      <span class="eyebrow">Calendario · v26.04</span>
+      <span class="eyebrow" style="color:#FF4B1F;">● EN VIVO</span>
+    </div>
+  </div>
+  <div class="safe-bottom"></div>
+</div>
+
+<script>
+// ── DATA ───────────────────────────────────────────────────
+const CONCERTS = [
+  {id:1,year:2026,month:'ENE',mN:1,day:3,city:'Logroño',venue:'Festival Actual',status:'confirmed'},
+  {id:2,year:2026,month:'ENE',mN:1,day:14,city:'Madrid',venue:'La Riviera (Inverfest)',status:'confirmed'},
+  {id:3,year:2026,month:'ENE',mN:1,day:17,city:'Madrid',venue:'La Riviera (Inverfest)',status:'confirmed'},
+  {id:4,year:2026,month:'ENE',mN:1,day:18,city:'Madrid',venue:'La Riviera (Inverfest)',status:'confirmed'},
+  {id:5,year:2026,month:'ENE',mN:1,day:20,city:'Madrid',venue:'Evento privado / Acústico',status:'confirmed'},
+  {id:6,year:2026,month:'ENE',mN:1,day:31,city:'Santiago de Compostela',venue:'Sala Capitol',status:'confirmed'},
+  {id:7,year:2026,month:'FEB',mN:2,day:13,city:'Bilbao',venue:'Stage Live',status:'confirmed'},
+  {id:8,year:2026,month:'FEB',mN:2,day:14,city:'Bilbao',venue:'Café Antzokia',status:'confirmed'},
+  {id:9,year:2026,month:'FEB',mN:2,day:20,city:'Alicante',venue:'The One',status:'confirmed'},
+  {id:10,year:2026,month:'FEB',mN:2,day:21,city:'Córdoba',venue:'Sala Impala',status:'confirmed'},
+  {id:11,year:2026,month:'FEB',mN:2,day:28,city:'Zaragoza',venue:'Sala Oasis',status:'confirmed'},
+  {id:12,year:2026,month:'ABR',mN:4,day:24,city:'Lugo',venue:'FIV de Vilalba',status:'confirmed'},
+  {id:13,year:2026,month:'MAY',mN:5,day:2,city:'Murcia',venue:'Warm Up',status:'confirmed'},
+  {id:14,year:2026,month:'MAY',mN:5,day:8,city:'Cascante (Navarra)',venue:'Estaciones Sonoras',status:'confirmed'},
+  {id:15,year:2026,month:'MAY',mN:5,day:9,city:'Toledo',venue:'Toledo Beat Festival',status:'confirmed'},
+  {id:16,year:2026,month:'MAY',mN:5,day:15,city:'Armilla (Granada)',venue:'Degusta Fest',status:'confirmed'},
+  {id:17,year:2026,month:'MAY',mN:5,day:16,city:'Sevilla',venue:'Interestelar',status:'confirmed'},
+  {id:18,year:2026,month:'MAY',mN:5,day:22,city:'Ourense',venue:'Ouren Sound',status:'confirmed'},
+  {id:19,year:2026,month:'MAY',mN:5,day:23,city:'Málaga',venue:"Oh, See! Málaga",status:'confirmed'},
+  {id:20,year:2026,month:'MAY',mN:5,day:28,city:'Donosti',venue:'Festival Miramar Gauak',status:'confirmed'},
+  {id:21,year:2026,month:'MAY',mN:5,day:29,city:'Valencia',venue:'Nits de Vivers',status:'confirmed'},
+  {id:22,year:2026,month:'JUN',mN:6,day:6,city:'Zamora',venue:'La Liturgia del Vermut',status:'confirmed'},
+  {id:23,year:2026,month:'JUN',mN:6,day:13,city:'Baeza (Jaén)',venue:'Sentir Baeza',status:'confirmed'},
+  {id:24,year:2026,month:'JUN',mN:6,day:18,city:'Santiago de Compostela',venue:'O Son do Camiño',status:'confirmed'},
+  {id:25,year:2026,month:'JUN',mN:6,day:19,city:'Albacete',venue:'Antorchas Festival',status:'confirmed'},
+  {id:26,year:2026,month:'JUN',mN:6,day:20,city:'Girona',venue:'Itaca Festival',status:'confirmed'},
+  {id:27,year:2026,month:'JUN',mN:6,day:26,city:'La Vila Joiosa (Alicante)',venue:'Festival Maror',status:'confirmed'},
+  {id:28,year:2026,month:'JUL',mN:7,day:4,city:'La Solana (Ciudad Real)',venue:'Oasis Sound',status:'confirmed'},
+  {id:29,year:2026,month:'JUL',mN:7,day:16,city:'Benicassim (Castellón)',venue:'FIB',status:'confirmed'},
+  {id:30,year:2026,month:'JUL',mN:7,day:18,city:'Vilagarcía de Arousa',venue:'Atlantic Fest',status:'confirmed'},
+  {id:31,year:2026,month:'JUL',mN:7,day:23,city:'Lanuza (Huesca)',venue:'Pirineos Sur',status:'confirmed'},
+  {id:32,year:2026,month:'JUL',mN:7,day:25,city:'San Fernando de Cádiz',venue:'Bahía Sound',status:'confirmed'},
+  {id:33,year:2026,month:'JUL',mN:7,day:31,city:'Borja (Zaragoza)',venue:'Festival Amante',status:'confirmed'},
+  {id:34,year:2026,month:'AGO',mN:8,day:1,city:'Santander',venue:'Santander Music',status:'confirmed'},
+  {id:35,year:2026,month:'AGO',mN:8,day:2,city:'Benidorm (Alicante)',venue:'Low Festival',status:'confirmed'},
+  {id:36,year:2026,month:'AGO',mN:8,day:7,city:'Aranda de Duero (Burgos)',venue:'Sonorama Ribera',status:'confirmed'},
+  {id:37,year:2026,month:'AGO',mN:8,day:8,city:'Zamora',venue:'Festival Toro',status:'confirmed'},
+  {id:38,year:2026,month:'AGO',mN:8,day:10,city:'Luanco (Asturias)',venue:'Luanco al Mar',status:'reserved'},
+  {id:39,year:2026,month:'AGO',mN:8,day:13,city:'Gandía (Valencia)',venue:'Mediterranea',status:'confirmed'},
+  {id:40,year:2026,month:'AGO',mN:8,day:21,city:'Ezcaray (La Rioja)',venue:'Ezca Fest',status:'confirmed'},
+  {id:41,year:2026,month:'AGO',mN:8,day:22,city:'Pontevedra',venue:'Río Verbena',status:'confirmed'},
+  {id:42,year:2026,month:'AGO',mN:8,day:23,city:'San Vicente (Pontevedra)',venue:'Naútico',status:'reserved'},
+  {id:43,year:2026,month:'AGO',mN:8,day:27,city:'Cartagena',venue:'Noches de Sal',status:'confirmed'},
+  {id:44,year:2026,month:'AGO',mN:8,day:28,city:'Cuenca',venue:'Indyspensables',status:'confirmed'},
+  {id:45,year:2026,month:'AGO',mN:8,day:29,city:'Cáceres',venue:'Naval Sonora',status:'reserved'},
+  {id:46,year:2026,month:'SEP',mN:9,day:4,city:'Miranda de Ebro (Burgos)',venue:'Ebrovisión',status:'confirmed'},
+  {id:47,year:2026,month:'SEP',mN:9,day:5,city:'Pto. de la Cruz (Tenerife)',venue:'PHE Festival',status:'confirmed'},
+  {id:48,year:2026,month:'SEP',mN:9,day:25,city:'León',venue:'León Sólo Música',status:'confirmed'},
+  {id:49,year:2026,month:'OCT',mN:10,day:2,city:'Las Palmas de Gran Canaria',venue:'SUM Festival',status:'confirmed'},
+  {id:50,year:2026,month:'OCT',mN:10,day:9,city:'Elche (Alicante)',venue:'Oasis Elche Music Festival',status:'confirmed'},
+  {id:51,year:2026,month:'OCT',mN:10,day:10,city:'Rodalquilar (Almería)',venue:'Otoño y Sal',status:'confirmed'},
+  {id:52,year:2026,month:'OCT',mN:10,day:17,city:'Don Benito (Badajoz)',venue:'ContemPOPranea',status:'confirmed'},
+  {id:53,year:2026,month:'NOV',mN:11,day:21,city:'Málaga',venue:'París 15 — Fin de Gira',status:'confirmed'},
+  {id:54,year:2026,month:'NOV',mN:11,day:26,city:'Bilbao',venue:'Santana 27 — Fin de Gira',status:'reserved'},
+  {id:55,year:2026,month:'NOV',mN:11,day:27,city:'Bilbao',venue:'Santana 27 — Fin de Gira',status:'confirmed'},
+  {id:56,year:2026,month:'DIC',mN:12,day:19,city:'A Coruña',venue:'Palacio de la Ópera',status:'confirmed'},
+  {id:57,year:2027,month:'ENE',mN:1,day:9,city:'Barcelona',venue:'Sant Jordi Club — Fin de Gira',status:'confirmed'},
+  {id:58,year:2027,month:'ENE',mN:1,day:23,city:'Valencia',venue:'Auditorio Roig Arena — Fin de Gira',status:'confirmed'},
+  {id:59,year:2027,month:'ENE',mN:1,day:30,city:'Madrid',venue:'Movistar Arena — Fin de Gira',status:'confirmed'},
+];
+
+const MES = {ENE:'ENERO',FEB:'FEBRERO',MAR:'MARZO',ABR:'ABRIL',MAY:'MAYO',JUN:'JUNIO',JUL:'JULIO',AGO:'AGOSTO',SEP:'SEPTIEMBRE',OCT:'OCTUBRE',NOV:'NOVIEMBRE',DIC:'DICIEMBRE'};
+const TODAY = 2026*10000 + 4*100 + 20;
+const sv = c => c.year*10000 + c.mN*100 + c.day;
+const isPast = c => sv(c) < TODAY;
+const fmt = n => n.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
+const pad = n => String(n).padStart(2,'0');
+
+let currentConcert = null;
+let facIvaOn = true, facIrpfOn = true;
+let currentFilter = 'PRÓXIMAS';
+
+// ── NAVIGATION ─────────────────────────────────────────────
+function goTo(id) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.getElementById(id).scrollTop = 0;
+  try{ localStorage.setItem('cal_screen', id); }catch(e){}
+}
+
+// ── HOME ────────────────────────────────────────────────────
+function renderHome() {
+  const upcoming = CONCERTS.filter(c=>!isPast(c));
+  const next = upcoming[0];
+  document.getElementById('h-upcoming').textContent = upcoming.length + ' próximas';
+  document.getElementById('h-total').textContent = pad(CONCERTS.length);
+
+  // list
+  const list = document.getElementById('h-list');
+  list.innerHTML = CONCERTS.map(c=>`
+    <div class="home-list-row" onclick="openConcert(${c.id})" style="opacity:${isPast(c)?0.4:1}">
+      <span>${c.city.toUpperCase().substring(0,18)}</span>
+      <span style="opacity:0.55;margin-left:8px;flex-shrink:0;">${c.month} ${pad(c.day)}</span>
+    </div>`).join('');
+
+  if (next) {
+    document.getElementById('h-next-year').textContent = next.year;
+    document.getElementById('h-next-day').innerHTML = pad(next.day)+'<span class="home-next-month">'+next.month+'</span>';
+    document.getElementById('h-next-city').textContent = next.city;
+    document.getElementById('h-next-venue').textContent = next.venue;
+    window._nextConcert = next;
+  }
+}
+
+function openNextDetail() {
+  if (window._nextConcert) openConcert(window._nextConcert.id);
+}
+
+// ── LIST ─────────────────────────────────────────────────────
+function setFilter(el) {
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  currentFilter = el.dataset.f;
+  renderList();
+}
+
+function renderList() {
+  const filtered = currentFilter==='PRÓXIMAS' ? CONCERTS.filter(c=>!isPast(c))
+    : currentFilter==='PASADOS' ? CONCERTS.filter(c=>isPast(c)) : CONCERTS;
+
+  document.getElementById('l-count').textContent = filtered.length + ' fechas';
+
+  // group by month
+  const groups = {};
+  filtered.forEach(c=>{
+    const k = c.year+'-'+pad(c.mN);
+    if (!groups[k]) groups[k]={label:MES[c.month]+' '+c.year, items:[]};
+    groups[k].items.push(c);
+  });
+
+  document.getElementById('l-body').innerHTML = Object.values(groups).map(g=>`
+    <div>
+      <div class="month-header">
+        <span class="eyebrow" style="font-size:11px;font-weight:700;">${g.label}</span>
+        <span class="eyebrow">${pad(g.items.length)} fechas</span>
+      </div>
+      <div style="height:1px;background:#0A0A0A;margin:8px 20px 0;"></div>
+      ${g.items.map(c=>`
+        <div class="list-row" onclick="openConcert(${c.id})" style="opacity:${isPast(c)?0.5:1}">
+          <div class="list-day">${pad(c.day)}</div>
+          <div>
+            <div class="list-city">${c.city}</div>
+            <div class="list-venue">${c.venue}</div>
+          </div>
+          <span class="badge ${isPast(c)?'past':c.status==='reserved'?'res':'conf'}">${isPast(c)?'PASADO':c.status==='reserved'?'RESERVADO':'CONF.'}</span>
+        </div>`).join('')}
+    </div>`).join('');
+}
+
+// ── DETAIL ───────────────────────────────────────────────────
+function openConcert(id) {
+  currentConcert = CONCERTS.find(c=>c.id===id);
+  const c = currentConcert;
+  const past = isPast(c);
+  document.getElementById('d-year').textContent = c.year;
+  document.getElementById('d-day').textContent = pad(c.day);
+  document.getElementById('d-month').textContent = MES[c.month];
+  const cityEl = document.getElementById('d-city');
+  const fs = c.city.length>16?'min(8vw,32px)':c.city.length>12?'min(10vw,40px)':'min(13vw,50px)';
+  cityEl.style.fontSize = fs;
+  cityEl.textContent = c.city.toUpperCase();
+  document.getElementById('d-venue').textContent = c.venue;
+  const badge = document.getElementById('d-badge');
+  badge.className = 'badge '+(past?'past':c.status==='reserved'?'res':'conf');
+  badge.textContent = past?'PASADO':c.status==='reserved'?'RESERVADO':'CONFIRMADO';
+  goTo('s-detail');
+}
+
+function goToFactura() {
+  if (!currentConcert) return;
+  const c = currentConcert;
+  document.getElementById('f-num').value = `${c.year}-${pad(c.mN)}-${pad(c.id)}`;
+  document.getElementById('f-date').textContent = `${pad(c.day)}/${pad(c.mN)}/${c.year}`;
+  document.getElementById('f-concepto').value = `Actuación musical — ${c.city}, ${c.venue} (${pad(c.day)} ${MES[c.month]} ${c.year})`;
+  document.getElementById('f-base').value = '';
+  facIvaOn = true; facIrpfOn = true;
+  document.getElementById('t-iva').className = 'fac-toggle on';
+  document.getElementById('t-irpf').className = 'fac-toggle on';
+  calcFactura();
+  goTo('s-factura');
+}
+
+// ── FACTURA ──────────────────────────────────────────────────
+function toggleFac(type) {
+  if (type==='iva') { facIvaOn=!facIvaOn; document.getElementById('t-iva').className='fac-toggle'+(facIvaOn?' on':''); }
+  else { facIrpfOn=!facIrpfOn; document.getElementById('t-irpf').className='fac-toggle'+(facIrpfOn?' on':''); }
+  calcFactura();
+}
+
+function calcFactura() {
+  const base = parseFloat(document.getElementById('f-base').value)||0;
+  const iva = facIvaOn ? base*0.21 : 0;
+  const irpf = facIrpfOn ? base*0.15 : 0;
+  const total = base+iva-irpf;
+  let des = '';
+  if (base>0) {
+    des += `<div style="height:1px;background:rgba(10,10,10,0.12);margin:4px 0;"></div>
+      <div class="fac-line"><span>Base</span><span>${fmt(base)}</span></div>`;
+    if (facIvaOn) des += `<div class="fac-line" style="color:rgba(10,10,10,0.5);"><span>IVA (21%)</span><span>+ ${fmt(iva)}</span></div>`;
+    if (facIrpfOn) des += `<div class="fac-line" style="color:rgba(10,10,10,0.5);"><span>IRPF (15%)</span><span>− ${fmt(irpf)}</span></div>`;
+  }
+  document.getElementById('f-desglose').innerHTML = des;
+  document.getElementById('f-total').textContent = base>0 ? fmt(total) : '0,00 €';
+}
+
+function exportarFactura() {
+  const c = currentConcert;
+  if (!c) return;
+  const base = parseFloat(document.getElementById('f-base').value)||0;
+  const iva = facIvaOn?base*0.21:0;
+  const irpf = facIrpfOn?base*0.15:0;
+  const total = base+iva-irpf;
+  const num = document.getElementById('f-num').value;
+  const concepto = document.getElementById('f-concepto').value;
+
+  const html = `<!DOCTYPE html><html lang="es"><head>
+<meta charset="UTF-8"><title>Factura ${num}</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Archivo",Helvetica,sans-serif;color:#0A0A0A;background:#fff;padding:60px;max-width:800px;margin:0 auto;}
+.mono{font-family:"JetBrains Mono",monospace;}
+.rule{height:1px;background:#0A0A0A;margin:16px 0;}
+.light{height:1px;background:rgba(10,10,10,0.15);margin:10px 0;}
+.ey{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:rgba(10,10,10,0.5);margin-bottom:4px;}
+@media print{body{padding:40px;}@page{margin:0;size:A4;}}
+</style></head><body>
+<div class="rule"></div>
+<div style="display:flex;justify-content:space-between;align-items:flex-start;padding:20px 0 16px;">
+  <div>
+    <div style="font-weight:900;font-size:52px;letter-spacing:-2px;line-height:1;">FACTURA</div>
+    <div class="mono" style="font-size:11px;margin-top:6px;color:rgba(10,10,10,0.55);">Nº ${num}</div>
+  </div>
+  <div style="text-align:right;padding-top:8px;">
+    <div class="ey">Fecha de emisión</div>
+    <div class="mono" style="font-size:14px;font-weight:700;">${pad(c.day)}/${pad(c.mN)}/${c.year}</div>
+  </div>
+</div>
+<div class="rule"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;padding:20px 0;">
+  <div><div class="ey">Emisor</div>
+    <div style="font-weight:800;font-size:15px;margin-bottom:6px;">Antonio Tamargo Rodríguez</div>
+    <div class="mono" style="font-size:11px;line-height:1.8;color:rgba(10,10,10,0.7);">NIF: 71678522B<br>C/ Altamirano 2, Int. 3ª<br>33003 Oviedo, Asturias</div>
+  </div>
+  <div><div class="ey">Pagador</div>
+    <div style="font-weight:800;font-size:15px;margin-bottom:6px;">BAOWATT SCCL</div>
+    <div class="mono" style="font-size:11px;line-height:1.8;color:rgba(10,10,10,0.7);">CIF: F02995165<br>C/ Can Massa, 33<br>17007 Girona</div>
+  </div>
+</div>
+<div class="rule"></div>
+<div style="padding:20px 0;">
+  <div class="ey" style="margin-bottom:12px;">Concepto</div>
+  <div style="display:grid;grid-template-columns:1fr auto auto;gap:20px;align-items:baseline;border-bottom:1px solid rgba(10,10,10,0.15);padding-bottom:14px;">
+    <div style="font-size:14px;font-weight:600;">${concepto}</div>
+    <div class="ey" style="white-space:nowrap;">Base imponible</div>
+    <div style="font-weight:800;font-size:18px;letter-spacing:-0.5px;text-align:right;">${fmt(base)}</div>
+  </div>
+</div>
+<div style="display:flex;flex-direction:column;align-items:flex-end;padding:0 0 20px;">
+  ${facIvaOn?`<div class="light" style="width:320px;"></div><div style="display:flex;justify-content:space-between;width:320px;padding:5px 0;"><span class="mono" style="font-size:11px;color:rgba(10,10,10,0.55);">IVA (21%)</span><span class="mono" style="font-size:12px;">+ ${fmt(iva)}</span></div>`:''}
+  ${facIrpfOn?`<div class="light" style="width:320px;"></div><div style="display:flex;justify-content:space-between;width:320px;padding:5px 0;"><span class="mono" style="font-size:11px;color:rgba(10,10,10,0.55);">IRPF (15%)</span><span class="mono" style="font-size:12px;">− ${fmt(irpf)}</span></div>`:''}
+  <div style="height:2px;background:#0A0A0A;width:320px;margin:10px 0 0;"></div>
+  <div style="display:flex;justify-content:space-between;align-items:baseline;width:320px;padding:10px 0 0;">
+    <span style="font-weight:900;font-size:22px;letter-spacing:-0.5px;">TOTAL</span>
+    <span style="font-weight:900;font-size:28px;letter-spacing:-1px;">${fmt(total)}</span>
+  </div>
+</div>
+<div class="rule"></div>
+<div class="mono" style="font-size:9px;letter-spacing:1px;color:rgba(10,10,10,0.4);margin-top:16px;text-align:center;">
+  Antonio Tamargo Rodríguez · NIF 71678522B · 33003 Oviedo, Asturias
+</div>
+<script>window.onload=()=>{window.print();}<\/script>
+</body></html>`;
+  const w = window.open('','_blank');
+  if(w){w.document.write(html);w.document.close();}
+}
+
+// ── STATS ────────────────────────────────────────────────────
+function renderStats() {
+  const total = CONCERTS.length;
+  const conf = CONCERTS.filter(c=>c.status==='confirmed').length;
+  const res = CONCERTS.filter(c=>c.status==='reserved').length;
+  document.getElementById('st-total').textContent = pad(total);
+  document.getElementById('st-conf').textContent = pad(conf);
+  document.getElementById('st-res').textContent = pad(res);
+
+  // bars
+  const byMonth = {};
+  CONCERTS.forEach(c=>{
+    const k = c.year+'-'+pad(c.mN);
+    const label = c.month+' '+String(c.year).slice(2);
+    if (!byMonth[k]) byMonth[k]={label,count:0};
+    byMonth[k].count++;
+  });
+  const max = Math.max(...Object.values(byMonth).map(v=>v.count));
+  document.getElementById('st-bars').innerHTML = Object.values(byMonth).map(({label,count})=>`
+    <div class="bar-wrap">
+      <span class="bar-label">${label}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.round((count/max)*100)}%"></div></div>
+      <span class="bar-count">${count}</span>
+    </div>`).join('');
+
+  // cities
+  document.getElementById('st-cities').innerHTML = CONCERTS.map((c,i)=>`
+    <div class="city-row" style="opacity:${isPast(c)?0.35:1}">
+      <span>${pad(i+1)} · ${c.city.toUpperCase().substring(0,24)}</span>
+      <span style="opacity:0.6;">${c.month} ${pad(c.day)}</span>
+    </div>`).join('');
+}
+
+// ── INIT ─────────────────────────────────────────────────────
+renderHome();
+renderList();
+renderStats();
+try{
+  const s = localStorage.getItem('cal_screen');
+  if(s && document.getElementById(s)) goTo(s);
+}catch(e){}
+</script>
+<template id="__bundler_thumbnail" data-bg-color="#FF4B1F">
+  <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+    <rect width="120" height="80" fill="#FF4B1F"/>
+    <text x="8" y="62" font-family="Helvetica Neue,sans-serif" font-weight="900" font-size="56" fill="#0A0A0A" letter-spacing="-3">59</text>
+    <rect x="8" y="68" width="104" height="1.5" fill="#0A0A0A"/>
+    <text x="8" y="76" font-family="monospace" font-size="7" fill="#0A0A0A" letter-spacing="1" opacity="0.7">GIRA 2026–27</text>
+  </svg>
+</template>
+</body>
+</html>
