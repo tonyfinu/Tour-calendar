@@ -20,7 +20,7 @@ html,body{height:100%;background:#0A0A0A;font-family:"Archivo",Helvetica,sans-se
 .rule{height:1px;background:#0A0A0A;width:100%;}
 .rule-light{height:1px;background:rgba(10,10,10,0.14);width:100%;}
 
-/* ── HOME ── */
+/* HOME */
 #s-home{background:#FF4B1F;}
 .home-total{font-weight:900;font-size:min(52vw,210px);line-height:0.85;letter-spacing:-0.06em;color:#0A0A0A;padding:0 14px;cursor:pointer;margin-top:-4px;}
 .home-list-wrap{position:relative;}
@@ -33,7 +33,7 @@ html,body{height:100%;background:#0A0A0A;font-family:"Archivo",Helvetica,sans-se
 .home-next-month{font-size:min(8vw,32px);font-weight:700;vertical-align:top;margin-left:6px;letter-spacing:0;}
 .nav-bar{display:flex;justify-content:space-between;padding:14px 16px;background:#0A0A0A;color:#FF4B1F;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:1.2px;cursor:pointer;margin:20px 20px 0;}
 
-/* ── LIST ── */
+/* LIST */
 #s-list{background:#EDE7D9;}
 .filter-chip{padding:5px 12px;border:1px solid #0A0A0A;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:1px;cursor:pointer;text-transform:uppercase;background:transparent;color:#0A0A0A;display:inline-block;}
 .filter-chip.on{background:#0A0A0A;color:#FF4B1F;}
@@ -47,22 +47,16 @@ html,body{height:100%;background:#0A0A0A;font-family:"Archivo",Helvetica,sans-se
 .badge.past{color:rgba(10,10,10,0.4);}
 .month-header{display:flex;justify-content:space-between;align-items:baseline;padding:12px 20px 0;background:#EDE7D9;position:sticky;top:0;z-index:5;}
 
-/* ── DETAIL ── */
+/* DETAIL */
 #s-detail{background:#F5F1E6;}
 .detail-day{font-weight:900;font-size:min(44vw,160px);line-height:0.82;letter-spacing:-0.04em;padding:0 20px;margin-top:-4px;}
 .detail-month{font-weight:700;font-size:min(9vw,34px);letter-spacing:-1px;padding:0 20px;margin-top:-4px;}
 .detail-city{font-weight:900;line-height:1;letter-spacing:-0.03em;}
-.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;padding:12px 20px 0;}
-.stat-cell{padding:10px 0;border-bottom:1px solid rgba(10,10,10,0.12);}
-.stat-label{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:rgba(10,10,10,0.5);}
-.stat-val{font-weight:700;font-size:20px;letter-spacing:-0.5px;margin-top:3px;}
-.cta-btn{padding:18px;background:#0A0A0A;color:#FF4B1F;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:1.6px;text-align:center;cursor:pointer;font-weight:700;margin:0 20px 40px;}
+.cta-btn{padding:18px;background:#0A0A0A;color:#FF4B1F;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:1.6px;text-align:center;cursor:pointer;font-weight:700;}
+.cta-btn-outline{padding:18px;background:transparent;color:#0A0A0A;border:1px solid #0A0A0A;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:1.6px;text-align:center;cursor:pointer;font-weight:700;}
 
-/* ── FACTURA ── */
+/* FACTURA */
 #s-factura{background:#fff;}
-.fac-title{font-weight:900;font-size:44px;letter-spacing:-1.5px;line-height:1;}
-.fac-num{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:0.6px;color:rgba(10,10,10,0.6);}
-.fac-section{padding:14px 20px 0;}
 .fac-party-label{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:rgba(10,10,10,0.5);margin-bottom:5px;}
 .fac-party-name{font-weight:800;font-size:14px;margin-bottom:4px;}
 .fac-party-body{font-family:"JetBrains Mono",monospace;font-size:10px;line-height:1.7;color:rgba(10,10,10,0.65);}
@@ -75,7 +69,7 @@ html,body{height:100%;background:#0A0A0A;font-family:"Archivo",Helvetica,sans-se
 .fac-total-label{font-weight:900;font-size:22px;letter-spacing:-0.5px;}
 .fac-total-val{font-weight:900;font-size:28px;letter-spacing:-1px;}
 
-/* ── STATS ── */
+/* STATS */
 #s-stats{background:#0A0A0A;color:#EDE7D9;}
 #s-stats .rule{background:#EDE7D9;}
 #s-stats .eyebrow{color:rgba(237,231,217,0.6);}
@@ -89,20 +83,31 @@ html,body{height:100%;background:#0A0A0A;font-family:"Archivo",Helvetica,sans-se
 .bar-count{font-weight:700;font-size:14px;letter-spacing:-0.5px;width:22px;text-align:right;color:#EDE7D9;}
 .city-row{display:flex;justify-content:space-between;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:0.4px;line-height:1.9;}
 
-/* ── SHARED ── */
+/* AJUSTES */
+#s-ajustes{background:#F5F1E6;}
+.adj-input{width:100%;border:none;border-bottom:1px solid rgba(10,10,10,0.3);background:transparent;font-family:"Archivo",sans-serif;font-size:16px;font-weight:600;padding:6px 0;outline:none;color:#0A0A0A;margin-bottom:4px;}
+.adj-label{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:rgba(10,10,10,0.45);margin-bottom:4px;margin-top:14px;display:block;}
+.adj-section-title{font-weight:900;font-size:28px;letter-spacing:-1px;margin:16px 0 4px;}
+
+/* EDITAR CONCIERTO */
+#s-edit{background:#F5F1E6;}
+.edit-input{width:100%;border:none;border-bottom:1px solid rgba(10,10,10,0.3);background:transparent;font-family:"Archivo",sans-serif;font-size:16px;font-weight:600;padding:8px 0;outline:none;color:#0A0A0A;}
+.edit-label{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:rgba(10,10,10,0.45);margin-bottom:2px;margin-top:16px;display:block;}
+select.edit-input{-webkit-appearance:none;cursor:pointer;}
+
+/* SHARED */
 .screen-top{display:flex;justify-content:space-between;align-items:center;padding:14px 20px 0;}
 .back-btn{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;cursor:pointer;}
-.section-pad{padding:0 20px;}
-.pb40{padding-bottom:40px;}
-.safe-bottom{height:env(safe-area-inset-bottom,20px);}
+.safe-bottom{height:max(env(safe-area-inset-bottom),20px);}
+.delete-btn{padding:16px;background:transparent;color:#c0392b;border:1px solid #c0392b;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:1.4px;text-align:center;cursor:pointer;font-weight:700;}
 </style>
 </head>
 <body>
 
-<!-- ═══ HOME ═══════════════════════════════════════════════ -->
+<!-- HOME -->
 <div id="s-home" class="screen active" data-screen-label="01 Home">
   <div style="display:flex;justify-content:space-between;align-items:center;padding:54px 20px 0;">
-    <span class="eyebrow">Gira 2026–2027</span>
+    <span class="eyebrow" id="h-artist-name">Gira 2026–2027</span>
     <span class="eyebrow" id="h-upcoming"></span>
   </div>
   <div style="padding:12px 20px 0;"><div class="rule"></div>
@@ -115,7 +120,7 @@ html,body{height:100%;background:#0A0A0A;font-family:"Archivo",Helvetica,sans-se
   <div style="padding:16px 20px 0;">
     <div class="rule"></div>
     <div style="display:grid;grid-template-columns:56px 1fr;gap:12px;padding:10px 0 16px;">
-      <div class="mono" style="font-size:9px;letter-spacing:0.8px;line-height:1.4;">ENE 26<br>ENE 27</div>
+      <div class="mono" style="font-size:9px;letter-spacing:0.8px;line-height:1.4;opacity:0.6;">TODAS<br>LAS<br>FECHAS</div>
       <div class="home-list-wrap">
         <div class="home-list-fade-top"></div>
         <div class="home-list" id="h-list"></div>
@@ -137,18 +142,19 @@ html,body{height:100%;background:#0A0A0A;font-family:"Archivo",Helvetica,sans-se
   <div class="nav-bar">
     <span onclick="goTo('s-list')">[ LISTA ]</span>
     <span onclick="goTo('s-stats')">[ STATS ]</span>
+    <span onclick="goTo('s-ajustes')">[ ⚙ ]</span>
   </div>
   <div class="safe-bottom"></div>
 </div>
 
-<!-- ═══ LIST ════════════════════════════════════════════════ -->
+<!-- LIST -->
 <div id="s-list" class="screen" data-screen-label="02 Lista">
   <div class="screen-top">
     <span class="back-btn" onclick="goTo('s-home')">← ATRÁS</span>
     <span class="eyebrow" id="l-count"></span>
   </div>
   <div style="padding:16px 20px 6px;">
-    <div style="font-weight:900;font-size:min(18vw,64px);line-height:0.88;letter-spacing:-0.03em;">Gira<br>2026–27.</div>
+    <div style="font-weight:900;font-size:min(18vw,64px);line-height:0.88;letter-spacing:-0.03em;" id="l-title">Gira<br>2026–27.</div>
   </div>
   <div style="display:flex;gap:6px;padding:14px 20px 12px;flex-wrap:wrap;">
     <span class="filter-chip on" data-f="PRÓXIMAS" onclick="setFilter(this)">Próximas</span>
@@ -156,11 +162,19 @@ html,body{height:100%;background:#0A0A0A;font-family:"Archivo",Helvetica,sans-se
     <span class="filter-chip" data-f="TODOS" onclick="setFilter(this)">Todos</span>
   </div>
   <div class="rule"></div>
+  <!-- Add button -->
+  <div onclick="openEdit(null)" style="display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid rgba(10,10,10,0.1);cursor:pointer;">
+    <div style="width:36px;height:36px;background:#FF4B1F;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff;flex-shrink:0;">+</div>
+    <div>
+      <div style="font-weight:700;font-size:15px;letter-spacing:-0.3px;">Añadir concierto</div>
+      <div class="mono" style="font-size:9px;color:rgba(10,10,10,0.5);margin-top:2px;letter-spacing:0.6px;">NUEVA FECHA</div>
+    </div>
+  </div>
   <div id="l-body" style="padding-bottom:40px;"></div>
   <div class="safe-bottom"></div>
 </div>
 
-<!-- ═══ DETAIL ══════════════════════════════════════════════ -->
+<!-- DETAIL -->
 <div id="s-detail" class="screen" data-screen-label="03 Detalle">
   <div class="screen-top">
     <span class="back-btn" onclick="goTo('s-list')">← ATRÁS</span>
@@ -184,14 +198,17 @@ html,body{height:100%;background:#0A0A0A;font-family:"Archivo",Helvetica,sans-se
       <div style="font-weight:600;font-size:18px;letter-spacing:-0.3px;margin-top:4px;" id="d-venue"></div>
     </div>
   </div>
-  <div style="padding:28px 20px 40px;">
-    <div class="rule" style="margin-bottom:16px;"></div>
-    <div class="cta-btn" style="margin:0;" onclick="goToFactura()">[ GENERAR FACTURA ]</div>
+  <div style="padding:24px 20px 8px;display:flex;gap:8px;">
+    <div class="cta-btn" style="flex:1;" onclick="goToFactura()">[ FACTURA ]</div>
+    <div class="cta-btn-outline" style="padding:18px 14px;white-space:nowrap;" onclick="editCurrentConcert()">[ EDITAR ]</div>
+  </div>
+  <div style="padding:0 20px 40px;">
+    <div class="delete-btn" onclick="deleteConcert()">[ ELIMINAR FECHA ]</div>
   </div>
   <div class="safe-bottom"></div>
 </div>
 
-<!-- ═══ FACTURA ═════════════════════════════════════════════ -->
+<!-- FACTURA -->
 <div id="s-factura" class="screen" data-screen-label="04 Factura">
   <div class="screen-top" style="background:#fff;">
     <span class="back-btn" onclick="goTo('s-detail')">← ATRÁS</span>
@@ -200,7 +217,7 @@ html,body{height:100%;background:#0A0A0A;font-family:"Archivo",Helvetica,sans-se
   <div style="padding:14px 20px 0;background:#fff;">
     <div class="rule"></div>
     <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:10px 0 6px;">
-      <div class="fac-title">FACTURA</div>
+      <div style="font-weight:900;font-size:44px;letter-spacing:-1.5px;line-height:1;">FACTURA</div>
       <div style="text-align:right;padding-top:4px;">
         <div class="fac-party-label">Nº:</div>
         <input class="fac-input" id="f-num" style="width:150px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.6px;">
@@ -208,40 +225,45 @@ html,body{height:100%;background:#0A0A0A;font-family:"Archivo",Helvetica,sans-se
     </div>
     <div class="rule"></div>
   </div>
-  <div class="fac-section" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;background:#fff;">
+  <div style="padding:14px 20px 0;display:grid;grid-template-columns:1fr 1fr;gap:16px;background:#fff;">
     <div>
       <div class="fac-party-label">Emisor</div>
-      <div class="fac-party-name">Antonio Tamargo Rodríguez</div>
-      <div class="fac-party-body">NIF: 71678522B<br>C/ Altamirano 2, Int. 3ª<br>33003 Oviedo, Asturias</div>
+      <div class="fac-party-name" id="f-emisor-nombre"></div>
+      <div class="fac-party-body" id="f-emisor-body"></div>
     </div>
     <div>
       <div class="fac-party-label">Pagador</div>
-      <div class="fac-party-name">BAOWATT SCCL</div>
-      <div class="fac-party-body">CIF: F02995165<br>C/ Can Massa, 33<br>17007 Girona</div>
+      <div class="fac-party-name" id="f-pagador-nombre"></div>
+      <div class="fac-party-body" id="f-pagador-body"></div>
     </div>
   </div>
   <div style="background:#fff;padding:10px 20px 0;">
-    <div class="rule-light"></div>
+    <div style="height:1px;background:rgba(10,10,10,0.12);margin:8px 0;"></div>
     <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;">
       <span class="fac-party-label">Fecha emisión:</span>
       <span class="mono" style="font-size:11px;" id="f-date"></span>
     </div>
-    <div class="rule-light"></div>
+    <div style="height:1px;background:rgba(10,10,10,0.12);margin:4px 0;"></div>
     <div style="padding:10px 0;">
       <div class="fac-party-label" style="margin-bottom:6px;">Concepto:</div>
       <input class="fac-input" id="f-concepto">
     </div>
-    <div class="rule-light"></div>
+    <div style="height:1px;background:rgba(10,10,10,0.12);margin:4px 0;"></div>
     <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0 6px;">
       <span class="fac-party-label">Base imponible (€):</span>
       <input class="fac-amount" id="f-base" type="number" placeholder="0" style="width:130px;" oninput="calcFactura()">
     </div>
-    <div class="rule-light"></div>
+    <div style="height:1px;background:rgba(10,10,10,0.12);margin:4px 0;"></div>
     <div style="display:flex;gap:8px;padding:10px 0;flex-wrap:wrap;">
       <span class="fac-toggle on" id="t-iva" onclick="toggleFac('iva')">IVA 21%</span>
       <span class="fac-toggle on" id="t-irpf" onclick="toggleFac('irpf')">IRPF -15%</span>
     </div>
     <div id="f-desglose"></div>
+    <div style="height:1px;background:rgba(10,10,10,0.12);margin:8px 0;"></div>
+    <div style="padding:8px 0;">
+      <div class="fac-party-label" style="margin-bottom:4px;">Datos bancarios:</div>
+      <div class="mono" style="font-size:11px;line-height:1.8;color:#0A0A0A;">ES40 0182 4800 5902 0161 3087<br>BBVA</div>
+    </div>
     <div class="rule" style="margin:10px 0;"></div>
     <div class="fac-total-row">
       <span class="fac-total-label">TOTAL</span>
@@ -255,14 +277,13 @@ html,body{height:100%;background:#0A0A0A;font-family:"Archivo",Helvetica,sans-se
   <div class="safe-bottom" style="background:#fff;"></div>
 </div>
 
-<!-- ═══ STATS ════════════════════════════════════════════════ -->
+<!-- STATS -->
 <div id="s-stats" class="screen" data-screen-label="05 Stats">
   <div class="screen-top">
     <span class="back-btn" onclick="goTo('s-home')" style="color:#EDE7D9;">← ATRÁS</span>
     <span class="eyebrow">Gira 26–27</span>
   </div>
-  <div style="padding:14px 20px 0;">
-    <div class="rule"></div>
+  <div style="padding:14px 20px 0;"><div class="rule"></div>
     <div class="eyebrow" style="padding:8px 0 0;">Total conciertos:</div>
   </div>
   <div class="stats-total" id="st-total"></div>
@@ -295,9 +316,80 @@ html,body{height:100%;background:#0A0A0A;font-family:"Archivo",Helvetica,sans-se
   <div class="safe-bottom"></div>
 </div>
 
+<!-- AJUSTES -->
+<div id="s-ajustes" class="screen" data-screen-label="06 Ajustes">
+  <div class="screen-top">
+    <span class="back-btn" onclick="goTo('s-home')">← ATRÁS</span>
+    <span class="eyebrow">Ajustes</span>
+  </div>
+  <div style="padding:16px 20px 0;"><div class="rule"></div></div>
+  <div style="padding:16px 20px 0;">
+    <div class="adj-section-title">Artista</div>
+    <label class="adj-label">Nombre artístico / Nombre completo</label>
+    <input class="adj-input" id="adj-nombre" placeholder="Tu nombre">
+    <label class="adj-label">NIF / NIE</label>
+    <input class="adj-input" id="adj-nif" placeholder="00000000X">
+    <label class="adj-label">Dirección</label>
+    <input class="adj-input" id="adj-dir" placeholder="C/ Nombre, Nº">
+    <label class="adj-label">CP y Ciudad</label>
+    <input class="adj-input" id="adj-cp" placeholder="00000 Ciudad, Provincia">
+  </div>
+  <div style="padding:16px 20px 0;"><div class="rule"></div></div>
+  <div style="padding:16px 20px 0;">
+    <div class="adj-section-title">Pagador</div>
+    <label class="adj-label">Nombre / Razón social</label>
+    <input class="adj-input" id="adj-pag-nombre" placeholder="Empresa SL">
+    <label class="adj-label">CIF / NIF</label>
+    <input class="adj-input" id="adj-pag-cif" placeholder="B00000000">
+    <label class="adj-label">Dirección</label>
+    <input class="adj-input" id="adj-pag-dir" placeholder="C/ Nombre, Nº">
+    <label class="adj-label">CP y Ciudad</label>
+    <input class="adj-input" id="adj-pag-cp" placeholder="00000 Ciudad">
+  </div>
+  <div style="padding:24px 20px 40px;">
+    <div class="rule" style="margin-bottom:16px;"></div>
+    <div class="cta-btn" onclick="saveAjustes()">[ GUARDAR CAMBIOS ]</div>
+  </div>
+  <div class="safe-bottom"></div>
+</div>
+
+<!-- EDITAR / AÑADIR CONCIERTO -->
+<div id="s-edit" class="screen" data-screen-label="07 Editar">
+  <div class="screen-top">
+    <span class="back-btn" id="edit-back-btn" onclick="goTo('s-list')">← ATRÁS</span>
+    <span class="eyebrow" id="edit-title-label">Añadir fecha</span>
+  </div>
+  <div style="padding:14px 20px 0;"><div class="rule"></div></div>
+  <div style="padding:16px 20px 0;">
+    <label class="edit-label">Ciudad</label>
+    <input class="edit-input" id="e-city" placeholder="Madrid">
+    <label class="edit-label">Recinto / Festival</label>
+    <input class="edit-input" id="e-venue" placeholder="Sala X">
+    <label class="edit-label">Fecha</label>
+    <input class="edit-input" id="e-date" type="date">
+    <label class="edit-label">Estado</label>
+    <select class="edit-input" id="e-status">
+      <option value="confirmed">Confirmado</option>
+      <option value="reserved">Reservado</option>
+    </select>
+  </div>
+  <div style="padding:24px 20px 12px;">
+    <div class="rule" style="margin-bottom:16px;"></div>
+    <div class="cta-btn" onclick="saveConcert()">[ GUARDAR ]</div>
+  </div>
+  <div id="edit-delete-wrap" style="padding:0 20px 40px;display:none;">
+    <div class="delete-btn" onclick="deleteFromEdit()">[ ELIMINAR ESTA FECHA ]</div>
+  </div>
+  <div class="safe-bottom"></div>
+</div>
+
 <script>
-// ── DATA ───────────────────────────────────────────────────
-const CONCERTS = [
+// ── MESES ───────────────────────────────────────────────────
+const MESES_SHORT = ['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
+const MESES_LONG  = {ENE:'ENERO',FEB:'FEBRERO',MAR:'MARZO',ABR:'ABRIL',MAY:'MAYO',JUN:'JUNIO',JUL:'JULIO',AGO:'AGOSTO',SEP:'SEPTIEMBRE',OCT:'OCTUBRE',NOV:'NOVIEMBRE',DIC:'DICIEMBRE'};
+
+// ── DATA POR DEFECTO ────────────────────────────────────────
+const DEFAULT_CONCERTS = [
   {id:1,year:2026,month:'ENE',mN:1,day:3,city:'Logroño',venue:'Festival Actual',status:'confirmed'},
   {id:2,year:2026,month:'ENE',mN:1,day:14,city:'Madrid',venue:'La Riviera (Inverfest)',status:'confirmed'},
   {id:3,year:2026,month:'ENE',mN:1,day:17,city:'Madrid',venue:'La Riviera (Inverfest)',status:'confirmed'},
@@ -359,8 +451,38 @@ const CONCERTS = [
   {id:59,year:2027,month:'ENE',mN:1,day:30,city:'Madrid',venue:'Movistar Arena — Fin de Gira',status:'confirmed'},
 ];
 
-const MES = {ENE:'ENERO',FEB:'FEBRERO',MAR:'MARZO',ABR:'ABRIL',MAY:'MAYO',JUN:'JUNIO',JUL:'JULIO',AGO:'AGOSTO',SEP:'SEPTIEMBRE',OCT:'OCTUBRE',NOV:'NOVIEMBRE',DIC:'DICIEMBRE'};
-const TODAY = 2026*10000 + 4*100 + 20;
+const DEFAULT_EMISOR = {nombre:'Antonio Tamargo Rodríguez',nif:'71678522B',dir:'C/ Altamirano 2, Int. 3ª',cp:'33003 Oviedo, Asturias'};
+const DEFAULT_PAGADOR = {nombre:'BAOWATT SCCL',cif:'F02995165',dir:'C/ Can Massa, 33',cp:'17007 Girona'};
+
+// ── PERSISTENCIA ────────────────────────────────────────────
+function loadData() {
+  try {
+    const c = localStorage.getItem('cal_concerts');
+    CONCERTS = c ? JSON.parse(c) : JSON.parse(JSON.stringify(DEFAULT_CONCERTS));
+    const e = localStorage.getItem('cal_emisor');
+    EMISOR = e ? JSON.parse(e) : {...DEFAULT_EMISOR};
+    const p = localStorage.getItem('cal_pagador');
+    PAGADOR = p ? JSON.parse(p) : {...DEFAULT_PAGADOR};
+  } catch(err) {
+    CONCERTS = JSON.parse(JSON.stringify(DEFAULT_CONCERTS));
+    EMISOR = {...DEFAULT_EMISOR};
+    PAGADOR = {...DEFAULT_PAGADOR};
+  }
+}
+
+function saveData() {
+  try {
+    localStorage.setItem('cal_concerts', JSON.stringify(CONCERTS));
+    localStorage.setItem('cal_emisor', JSON.stringify(EMISOR));
+    localStorage.setItem('cal_pagador', JSON.stringify(PAGADOR));
+  } catch(e){}
+}
+
+let CONCERTS, EMISOR, PAGADOR;
+loadData();
+
+// ── HELPERS ─────────────────────────────────────────────────
+const TODAY = 2026*10000 + 4*100 + 21;
 const sv = c => c.year*10000 + c.mN*100 + c.day;
 const isPast = c => sv(c) < TODAY;
 const fmt = n => n.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
@@ -369,25 +491,37 @@ const pad = n => String(n).padStart(2,'0');
 let currentConcert = null;
 let facIvaOn = true, facIrpfOn = true;
 let currentFilter = 'PRÓXIMAS';
+let editingId = null;
 
-// ── NAVIGATION ─────────────────────────────────────────────
+// ── NAVIGATION ───────────────────────────────────────────────
 function goTo(id) {
+  if (id==='s-ajustes') loadAjustesForm();
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   document.getElementById(id).scrollTop = 0;
   try{ localStorage.setItem('cal_screen', id); }catch(e){}
 }
 
-// ── HOME ────────────────────────────────────────────────────
+// ── HOME ─────────────────────────────────────────────────────
 function renderHome() {
-  const upcoming = CONCERTS.filter(c=>!isPast(c));
+  const sorted = [...CONCERTS].sort((a,b)=>sv(a)-sv(b));
+  const upcoming = sorted.filter(c=>!isPast(c));
   const next = upcoming[0];
+  document.getElementById('h-artist-name').textContent = EMISOR.nombre.split(' ')[0] + ' · Gira';
   document.getElementById('h-upcoming').textContent = upcoming.length + ' próximas';
   document.getElementById('h-total').textContent = pad(CONCERTS.length);
 
-  // list
   const list = document.getElementById('h-list');
-  list.innerHTML = CONCERTS.map(c=>`
+  // Scroll to next upcoming concert after render
+  setTimeout(()=>{
+    const rows = list.querySelectorAll('.home-list-row');
+    const nextIdx = sorted.findIndex(c=>!isPast(c));
+    if(nextIdx>0 && rows[nextIdx]){
+      const rowH = rows[0].offsetHeight||20;
+      list.scrollTop = Math.max(0, nextIdx*rowH - 20);
+    }
+  }, 50);
+  list.innerHTML = sorted.map(c=>`
     <div class="home-list-row" onclick="openConcert(${c.id})" style="opacity:${isPast(c)?0.4:1}">
       <span>${c.city.toUpperCase().substring(0,18)}</span>
       <span style="opacity:0.55;margin-left:8px;flex-shrink:0;">${c.month} ${pad(c.day)}</span>
@@ -415,19 +549,16 @@ function setFilter(el) {
 }
 
 function renderList() {
-  const filtered = currentFilter==='PRÓXIMAS' ? CONCERTS.filter(c=>!isPast(c))
-    : currentFilter==='PASADOS' ? CONCERTS.filter(c=>isPast(c)) : CONCERTS;
-
+  const sorted = [...CONCERTS].sort((a,b)=>sv(a)-sv(b));
+  const filtered = currentFilter==='PRÓXIMAS' ? sorted.filter(c=>!isPast(c))
+    : currentFilter==='PASADOS' ? sorted.filter(c=>isPast(c)) : sorted;
   document.getElementById('l-count').textContent = filtered.length + ' fechas';
-
-  // group by month
   const groups = {};
   filtered.forEach(c=>{
     const k = c.year+'-'+pad(c.mN);
-    if (!groups[k]) groups[k]={label:MES[c.month]+' '+c.year, items:[]};
+    if (!groups[k]) groups[k]={label:MESES_LONG[c.month]+' '+c.year, items:[]};
     groups[k].items.push(c);
   });
-
   document.getElementById('l-body').innerHTML = Object.values(groups).map(g=>`
     <div>
       <div class="month-header">
@@ -442,7 +573,7 @@ function renderList() {
             <div class="list-city">${c.city}</div>
             <div class="list-venue">${c.venue}</div>
           </div>
-          <span class="badge ${isPast(c)?'past':c.status==='reserved'?'res':'conf'}">${isPast(c)?'PASADO':c.status==='reserved'?'RESERVADO':'CONF.'}</span>
+          <span class="badge ${isPast(c)?'past':c.status==='reserved'?'res':'conf'}">${isPast(c)?'PASADO':c.status==='reserved'?'RESERV.':'CONF.'}</span>
         </div>`).join('')}
     </div>`).join('');
 }
@@ -454,10 +585,9 @@ function openConcert(id) {
   const past = isPast(c);
   document.getElementById('d-year').textContent = c.year;
   document.getElementById('d-day').textContent = pad(c.day);
-  document.getElementById('d-month').textContent = MES[c.month];
+  document.getElementById('d-month').textContent = MESES_LONG[c.month];
   const cityEl = document.getElementById('d-city');
-  const fs = c.city.length>16?'min(8vw,32px)':c.city.length>12?'min(10vw,40px)':'min(13vw,50px)';
-  cityEl.style.fontSize = fs;
+  cityEl.style.fontSize = c.city.length>16?'min(8vw,32px)':c.city.length>12?'min(10vw,40px)':'min(13vw,50px)';
   cityEl.textContent = c.city.toUpperCase();
   document.getElementById('d-venue').textContent = c.venue;
   const badge = document.getElementById('d-badge');
@@ -466,13 +596,122 @@ function openConcert(id) {
   goTo('s-detail');
 }
 
+function editCurrentConcert() {
+  if (currentConcert) openEdit(currentConcert.id);
+}
+
+function deleteConcert() {
+  if (!currentConcert) return;
+  if (!confirm('¿Eliminar este concierto?')) return;
+  CONCERTS = CONCERTS.filter(c=>c.id!==currentConcert.id);
+  saveData();
+  renderHome(); renderList(); renderStats();
+  goTo('s-list');
+}
+
+// ── EDITAR / AÑADIR ──────────────────────────────────────────
+function openEdit(id) {
+  editingId = id;
+  const isNew = !id;
+  document.getElementById('edit-title-label').textContent = isNew ? 'Añadir fecha' : 'Editar fecha';
+  document.getElementById('edit-back-btn').onclick = isNew ? ()=>goTo('s-list') : ()=>goTo('s-detail');
+  document.getElementById('edit-delete-wrap').style.display = isNew ? 'none' : 'block';
+
+  if (!isNew) {
+    const c = CONCERTS.find(x=>x.id===id);
+    document.getElementById('e-city').value = c.city;
+    document.getElementById('e-venue').value = c.venue;
+    document.getElementById('e-date').value = `${c.year}-${pad(c.mN)}-${pad(c.day)}`;
+    document.getElementById('e-status').value = c.status;
+  } else {
+    document.getElementById('e-city').value = '';
+    document.getElementById('e-venue').value = '';
+    document.getElementById('e-date').value = '';
+    document.getElementById('e-status').value = 'confirmed';
+  }
+  goTo('s-edit');
+}
+
+function saveConcert() {
+  const city = document.getElementById('e-city').value.trim();
+  const venue = document.getElementById('e-venue').value.trim();
+  const dateVal = document.getElementById('e-date').value;
+  const status = document.getElementById('e-status').value;
+  if (!city || !venue || !dateVal) { alert('Rellena ciudad, recinto y fecha.'); return; }
+
+  const d = new Date(dateVal+'T12:00:00');
+  const year = d.getFullYear();
+  const mN = d.getMonth()+1;
+  const day = d.getDate();
+  const month = MESES_SHORT[mN-1];
+
+  if (editingId) {
+    const idx = CONCERTS.findIndex(c=>c.id===editingId);
+    CONCERTS[idx] = {...CONCERTS[idx], city, venue, year, mN, day, month, status};
+    currentConcert = CONCERTS[idx];
+  } else {
+    const newId = Math.max(0,...CONCERTS.map(c=>c.id))+1;
+    CONCERTS.push({id:newId, year, month, mN, day, city, venue, status});
+  }
+  saveData();
+  renderHome(); renderList(); renderStats();
+  editingId ? goTo('s-detail') : goTo('s-list');
+  if (editingId) openConcert(editingId);
+}
+
+function deleteFromEdit() {
+  if (!editingId) return;
+  if (!confirm('¿Eliminar este concierto?')) return;
+  CONCERTS = CONCERTS.filter(c=>c.id!==editingId);
+  saveData();
+  renderHome(); renderList(); renderStats();
+  goTo('s-list');
+}
+
+// ── AJUSTES ──────────────────────────────────────────────────
+function loadAjustesForm() {
+  document.getElementById('adj-nombre').value = EMISOR.nombre;
+  document.getElementById('adj-nif').value = EMISOR.nif;
+  document.getElementById('adj-dir').value = EMISOR.dir;
+  document.getElementById('adj-cp').value = EMISOR.cp;
+  document.getElementById('adj-pag-nombre').value = PAGADOR.nombre;
+  document.getElementById('adj-pag-cif').value = PAGADOR.cif;
+  document.getElementById('adj-pag-dir').value = PAGADOR.dir;
+  document.getElementById('adj-pag-cp').value = PAGADOR.cp;
+}
+
+function saveAjustes() {
+  EMISOR = {
+    nombre: document.getElementById('adj-nombre').value.trim()||EMISOR.nombre,
+    nif:    document.getElementById('adj-nif').value.trim()||EMISOR.nif,
+    dir:    document.getElementById('adj-dir').value.trim()||EMISOR.dir,
+    cp:     document.getElementById('adj-cp').value.trim()||EMISOR.cp,
+  };
+  PAGADOR = {
+    nombre: document.getElementById('adj-pag-nombre').value.trim()||PAGADOR.nombre,
+    cif:    document.getElementById('adj-pag-cif').value.trim()||PAGADOR.cif,
+    dir:    document.getElementById('adj-pag-dir').value.trim()||PAGADOR.dir,
+    cp:     document.getElementById('adj-pag-cp').value.trim()||PAGADOR.cp,
+  };
+  saveData();
+  renderHome();
+  alert('✓ Datos guardados');
+  goTo('s-home');
+}
+
+// ── FACTURA ──────────────────────────────────────────────────
 function goToFactura() {
   if (!currentConcert) return;
   const c = currentConcert;
   document.getElementById('f-num').value = `${c.year}-${pad(c.mN)}-${pad(c.id)}`;
   document.getElementById('f-date').textContent = `${pad(c.day)}/${pad(c.mN)}/${c.year}`;
-  document.getElementById('f-concepto').value = `Actuación musical — ${c.city}, ${c.venue} (${pad(c.day)} ${MES[c.month]} ${c.year})`;
+  document.getElementById('f-concepto').value = `Actuación musical — ${c.city}, ${c.venue} (${pad(c.day)} ${MESES_LONG[c.month]} ${c.year})`;
   document.getElementById('f-base').value = '';
+  // Emisor / pagador dinámicos
+  document.getElementById('f-emisor-nombre').textContent = EMISOR.nombre;
+  document.getElementById('f-emisor-body').innerHTML = `NIF: ${EMISOR.nif}<br>${EMISOR.dir}<br>${EMISOR.cp}`;
+  document.getElementById('f-pagador-nombre').textContent = PAGADOR.nombre;
+  document.getElementById('f-pagador-body').innerHTML = `CIF: ${PAGADOR.cif}<br>${PAGADOR.dir}<br>${PAGADOR.cp}`;
   facIvaOn = true; facIrpfOn = true;
   document.getElementById('t-iva').className = 'fac-toggle on';
   document.getElementById('t-irpf').className = 'fac-toggle on';
@@ -480,7 +719,6 @@ function goToFactura() {
   goTo('s-factura');
 }
 
-// ── FACTURA ──────────────────────────────────────────────────
 function toggleFac(type) {
   if (type==='iva') { facIvaOn=!facIvaOn; document.getElementById('t-iva').className='fac-toggle'+(facIvaOn?' on':''); }
   else { facIrpfOn=!facIrpfOn; document.getElementById('t-irpf').className='fac-toggle'+(facIrpfOn?' on':''); }
@@ -512,44 +750,26 @@ function exportarFactura() {
   const total = base+iva-irpf;
   const num = document.getElementById('f-num').value;
   const concepto = document.getElementById('f-concepto').value;
-
   const html = `<!DOCTYPE html><html lang="es"><head>
 <meta charset="UTF-8"><title>Factura ${num}</title>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<style>
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:"Archivo",Helvetica,sans-serif;color:#0A0A0A;background:#fff;padding:60px;max-width:800px;margin:0 auto;}
-.mono{font-family:"JetBrains Mono",monospace;}
-.rule{height:1px;background:#0A0A0A;margin:16px 0;}
-.light{height:1px;background:rgba(10,10,10,0.15);margin:10px 0;}
-.ey{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:rgba(10,10,10,0.5);margin-bottom:4px;}
-@media print{body{padding:40px;}@page{margin:0;size:A4;}}
-</style></head><body>
+<style>*{box-sizing:border-box;margin:0;padding:0;}body{font-family:"Archivo",Helvetica,sans-serif;color:#0A0A0A;background:#fff;padding:60px;max-width:800px;margin:0 auto;}.mono{font-family:"JetBrains Mono",monospace;}.rule{height:1px;background:#0A0A0A;margin:16px 0;}.light{height:1px;background:rgba(10,10,10,0.15);margin:10px 0;}.ey{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:rgba(10,10,10,0.5);margin-bottom:4px;}@media print{body{padding:40px;}@page{margin:0;size:A4;}}</style></head><body>
 <div class="rule"></div>
 <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:20px 0 16px;">
-  <div>
-    <div style="font-weight:900;font-size:52px;letter-spacing:-2px;line-height:1;">FACTURA</div>
-    <div class="mono" style="font-size:11px;margin-top:6px;color:rgba(10,10,10,0.55);">Nº ${num}</div>
-  </div>
-  <div style="text-align:right;padding-top:8px;">
-    <div class="ey">Fecha de emisión</div>
-    <div class="mono" style="font-size:14px;font-weight:700;">${pad(c.day)}/${pad(c.mN)}/${c.year}</div>
-  </div>
+  <div><div style="font-weight:900;font-size:52px;letter-spacing:-2px;line-height:1;">FACTURA</div>
+  <div class="mono" style="font-size:11px;margin-top:6px;color:rgba(10,10,10,0.55);">Nº ${num}</div></div>
+  <div style="text-align:right;padding-top:8px;"><div class="ey">Fecha de emisión</div>
+  <div class="mono" style="font-size:14px;font-weight:700;">${pad(c.day)}/${pad(c.mN)}/${c.year}</div></div>
 </div>
 <div class="rule"></div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;padding:20px 0;">
-  <div><div class="ey">Emisor</div>
-    <div style="font-weight:800;font-size:15px;margin-bottom:6px;">Antonio Tamargo Rodríguez</div>
-    <div class="mono" style="font-size:11px;line-height:1.8;color:rgba(10,10,10,0.7);">NIF: 71678522B<br>C/ Altamirano 2, Int. 3ª<br>33003 Oviedo, Asturias</div>
-  </div>
-  <div><div class="ey">Pagador</div>
-    <div style="font-weight:800;font-size:15px;margin-bottom:6px;">BAOWATT SCCL</div>
-    <div class="mono" style="font-size:11px;line-height:1.8;color:rgba(10,10,10,0.7);">CIF: F02995165<br>C/ Can Massa, 33<br>17007 Girona</div>
-  </div>
+  <div><div class="ey">Emisor</div><div style="font-weight:800;font-size:15px;margin-bottom:6px;">${EMISOR.nombre}</div>
+  <div class="mono" style="font-size:11px;line-height:1.8;color:rgba(10,10,10,0.7);">NIF: ${EMISOR.nif}<br>${EMISOR.dir}<br>${EMISOR.cp}</div></div>
+  <div><div class="ey">Pagador</div><div style="font-weight:800;font-size:15px;margin-bottom:6px;">${PAGADOR.nombre}</div>
+  <div class="mono" style="font-size:11px;line-height:1.8;color:rgba(10,10,10,0.7);">CIF: ${PAGADOR.cif}<br>${PAGADOR.dir}<br>${PAGADOR.cp}</div></div>
 </div>
 <div class="rule"></div>
-<div style="padding:20px 0;">
-  <div class="ey" style="margin-bottom:12px;">Concepto</div>
+<div style="padding:20px 0;"><div class="ey" style="margin-bottom:12px;">Concepto</div>
   <div style="display:grid;grid-template-columns:1fr auto auto;gap:20px;align-items:baseline;border-bottom:1px solid rgba(10,10,10,0.15);padding-bottom:14px;">
     <div style="font-size:14px;font-weight:600;">${concepto}</div>
     <div class="ey" style="white-space:nowrap;">Base imponible</div>
@@ -566,16 +786,20 @@ body{font-family:"Archivo",Helvetica,sans-serif;color:#0A0A0A;background:#fff;pa
   </div>
 </div>
 <div class="rule"></div>
-<div class="mono" style="font-size:9px;letter-spacing:1px;color:rgba(10,10,10,0.4);margin-top:16px;text-align:center;">
-  Antonio Tamargo Rodríguez · NIF 71678522B · 33003 Oviedo, Asturias
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;padding:16px 0;">
+  <div><div class="ey">Datos bancarios</div>
+  <div class="mono" style="font-size:12px;line-height:1.8;font-weight:700;">ES40 0182 4800 5902 0161 3087</div>
+  <div class="mono" style="font-size:11px;color:rgba(10,10,10,0.6);">BBVA</div></div>
 </div>
+<div class="rule"></div>
+<div class="mono" style="font-size:9px;letter-spacing:1px;color:rgba(10,10,10,0.4);margin-top:16px;text-align:center;">${EMISOR.nombre} · NIF ${EMISOR.nif} · ${EMISOR.cp}</div>
 <script>window.onload=()=>{window.print();}<\/script>
 </body></html>`;
   const w = window.open('','_blank');
   if(w){w.document.write(html);w.document.close();}
 }
 
-// ── STATS ────────────────────────────────────────────────────
+// ── STATS ─────────────────────────────────────────────────────
 function renderStats() {
   const total = CONCERTS.length;
   const conf = CONCERTS.filter(c=>c.status==='confirmed').length;
@@ -583,8 +807,6 @@ function renderStats() {
   document.getElementById('st-total').textContent = pad(total);
   document.getElementById('st-conf').textContent = pad(conf);
   document.getElementById('st-res').textContent = pad(res);
-
-  // bars
   const byMonth = {};
   CONCERTS.forEach(c=>{
     const k = c.year+'-'+pad(c.mN);
@@ -592,23 +814,23 @@ function renderStats() {
     if (!byMonth[k]) byMonth[k]={label,count:0};
     byMonth[k].count++;
   });
-  const max = Math.max(...Object.values(byMonth).map(v=>v.count));
-  document.getElementById('st-bars').innerHTML = Object.values(byMonth).map(({label,count})=>`
+  const vals = Object.values(byMonth);
+  const max = Math.max(...vals.map(v=>v.count));
+  document.getElementById('st-bars').innerHTML = vals.map(({label,count})=>`
     <div class="bar-wrap">
       <span class="bar-label">${label}</span>
       <div class="bar-track"><div class="bar-fill" style="width:${Math.round((count/max)*100)}%"></div></div>
       <span class="bar-count">${count}</span>
     </div>`).join('');
-
-  // cities
-  document.getElementById('st-cities').innerHTML = CONCERTS.map((c,i)=>`
+  const sorted = [...CONCERTS].sort((a,b)=>sv(a)-sv(b));
+  document.getElementById('st-cities').innerHTML = sorted.map((c,i)=>`
     <div class="city-row" style="opacity:${isPast(c)?0.35:1}">
       <span>${pad(i+1)} · ${c.city.toUpperCase().substring(0,24)}</span>
       <span style="opacity:0.6;">${c.month} ${pad(c.day)}</span>
     </div>`).join('');
 }
 
-// ── INIT ─────────────────────────────────────────────────────
+// ── INIT ──────────────────────────────────────────────────────
 renderHome();
 renderList();
 renderStats();
