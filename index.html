@@ -45,6 +45,10 @@ html,body{height:100%;background:#0A0A0A;font-family:"Archivo",Helvetica,sans-se
 .badge.conf{color:#2d7d46;}
 .badge.res{color:#FF4B1F;}
 .badge.past{color:rgba(10,10,10,0.4);}
+.badge.invoiced{color:#2d7d46;}
+.list-row.invoiced .list-day{text-decoration:line-through;color:rgba(10,10,10,0.25);}
+.list-row.invoiced .list-city{text-decoration:line-through;color:rgba(10,10,10,0.35);}
+.list-row.invoiced .list-venue{opacity:0.35;}
 .month-header{display:flex;justify-content:space-between;align-items:baseline;padding:12px 20px 0;background:#EDE7D9;position:sticky;top:0;z-index:5;}
 
 /* DETAIL */
@@ -202,6 +206,9 @@ select.edit-input{-webkit-appearance:none;cursor:pointer;}
     <div class="cta-btn" style="flex:1;" onclick="goToFactura()">[ FACTURA ]</div>
     <div class="cta-btn-outline" style="padding:18px 14px;white-space:nowrap;" onclick="editCurrentConcert()">[ EDITAR ]</div>
   </div>
+  <div style="padding:0 20px 8px;">
+    <div id="d-invoiced-btn" class="cta-btn-outline" style="text-align:center;" onclick="toggleInvoiced()"></div>
+  </div>
   <div style="padding:0 20px 40px;">
     <div class="delete-btn" onclick="deleteConcert()">[ ELIMINAR FECHA ]</div>
   </div>
@@ -219,8 +226,8 @@ select.edit-input{-webkit-appearance:none;cursor:pointer;}
     <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:10px 0 6px;">
       <div style="font-weight:900;font-size:44px;letter-spacing:-1.5px;line-height:1;">FACTURA</div>
       <div style="text-align:right;padding-top:4px;">
-        <div class="fac-party-label">Nº:</div>
-        <input class="fac-input" id="f-num" style="width:150px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.6px;">
+        <div class="fac-party-label">Nº Factura:</div>
+        <input class="fac-input" id="f-num" style="width:180px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:0.6px;padding:8px 0;">
       </div>
     </div>
     <div class="rule"></div>
@@ -262,7 +269,7 @@ select.edit-input{-webkit-appearance:none;cursor:pointer;}
     <div style="height:1px;background:rgba(10,10,10,0.12);margin:8px 0;"></div>
     <div style="padding:8px 0;">
       <div class="fac-party-label" style="margin-bottom:4px;">Datos bancarios:</div>
-      <div class="mono" style="font-size:11px;line-height:1.8;color:#0A0A0A;">ES40 0182 4800 5902 0161 3087<br>BBVA</div>
+      <div class="mono" style="font-size:11px;line-height:1.8;color:#0A0A0A;" id="f-banco-display"></div>
     </div>
     <div class="rule" style="margin:10px 0;"></div>
     <div class="fac-total-row">
@@ -333,6 +340,10 @@ select.edit-input{-webkit-appearance:none;cursor:pointer;}
     <input class="adj-input" id="adj-dir" placeholder="C/ Nombre, Nº">
     <label class="adj-label">CP y Ciudad</label>
     <input class="adj-input" id="adj-cp" placeholder="00000 Ciudad, Provincia">
+    <label class="adj-label">IBAN</label>
+    <input class="adj-input" id="adj-iban" placeholder="ES00 0000 0000 0000 0000 0000">
+    <label class="adj-label">Banco</label>
+    <input class="adj-input" id="adj-banco" placeholder="Nombre del banco">
   </div>
   <div style="padding:16px 20px 0;"><div class="rule"></div></div>
   <div style="padding:16px 20px 0;">
@@ -401,7 +412,7 @@ const DEFAULT_CONCERTS = [
   {id:9,year:2026,month:'FEB',mN:2,day:20,city:'Alicante',venue:'The One',status:'confirmed'},
   {id:10,year:2026,month:'FEB',mN:2,day:21,city:'Córdoba',venue:'Sala Impala',status:'confirmed'},
   {id:11,year:2026,month:'FEB',mN:2,day:28,city:'Zaragoza',venue:'Sala Oasis',status:'confirmed'},
-  {id:12,year:2026,month:'ABR',mN:4,day:24,city:'Lugo',venue:'FIV de Vilalba',status:'confirmed'},
+  {id:12,year:2026,month:'ABR',mN:4,day:24,city:'Lugo',venue:'FIV de Vilalba',status:'confirmed',invoiced:true},
   {id:13,year:2026,month:'MAY',mN:5,day:2,city:'Murcia',venue:'Warm Up',status:'confirmed'},
   {id:14,year:2026,month:'MAY',mN:5,day:8,city:'Cascante (Navarra)',venue:'Estaciones Sonoras',status:'confirmed'},
   {id:15,year:2026,month:'MAY',mN:5,day:9,city:'Toledo',venue:'Toledo Beat Festival',status:'confirmed'},
@@ -451,8 +462,8 @@ const DEFAULT_CONCERTS = [
   {id:59,year:2027,month:'ENE',mN:1,day:30,city:'Madrid',venue:'Movistar Arena — Fin de Gira',status:'confirmed'},
 ];
 
-const DEFAULT_EMISOR = {nombre:'Antonio Tamargo Rodríguez',nif:'71678522B',dir:'C/ Altamirano 2, Int. 3ª',cp:'33003 Oviedo, Asturias'};
-const DEFAULT_PAGADOR = {nombre:'BAOWATT SCCL',cif:'F02995165',dir:'C/ Can Massa, 33',cp:'17007 Girona'};
+const DEFAULT_EMISOR = {nombre:'Antonio Tamargo Rodríguez',nif:'71678522B',dir:'C/ Altamirano 2, Int. 3ª',cp:'33003 Oviedo, Asturias',iban:'ES28 0081 2718 8400 2351 3167',banco:'Banco Sabadell'};
+const DEFAULT_PAGADOR = {nombre:'BAOWATT SCCL',cif:'F02995165',dir:'C/ Can Massa, 33',cp:'17007 Girona',concepto:'',numFactura:''};
 
 // ── PERSISTENCIA ────────────────────────────────────────────
 function loadData() {
@@ -482,7 +493,7 @@ let CONCERTS, EMISOR, PAGADOR;
 loadData();
 
 // ── HELPERS ─────────────────────────────────────────────────
-const TODAY = 2026*10000 + 4*100 + 21;
+const TODAY = 2026*10000 + 5*100 + 4;
 const sv = c => c.year*10000 + c.mN*100 + c.day;
 const isPast = c => sv(c) < TODAY;
 const fmt = n => n.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
@@ -567,13 +578,13 @@ function renderList() {
       </div>
       <div style="height:1px;background:#0A0A0A;margin:8px 20px 0;"></div>
       ${g.items.map(c=>`
-        <div class="list-row" onclick="openConcert(${c.id})" style="opacity:${isPast(c)?0.5:1}">
+        <div class="list-row${c.invoiced?' invoiced':''}" onclick="openConcert(${c.id})" style="opacity:${isPast(c)&&!c.invoiced?0.5:1}">
           <div class="list-day">${pad(c.day)}</div>
           <div>
             <div class="list-city">${c.city}</div>
             <div class="list-venue">${c.venue}</div>
           </div>
-          <span class="badge ${isPast(c)?'past':c.status==='reserved'?'res':'conf'}">${isPast(c)?'PASADO':c.status==='reserved'?'RESERV.':'CONF.'}</span>
+          <span class="badge ${c.invoiced?'invoiced':isPast(c)?'past':c.status==='reserved'?'res':'conf'}">${c.invoiced?'✓ FAC.':isPast(c)?'PASADO':c.status==='reserved'?'RESERV.':'CONF.'}</span>
         </div>`).join('')}
     </div>`).join('');
 }
@@ -591,9 +602,25 @@ function openConcert(id) {
   cityEl.textContent = c.city.toUpperCase();
   document.getElementById('d-venue').textContent = c.venue;
   const badge = document.getElementById('d-badge');
-  badge.className = 'badge '+(past?'past':c.status==='reserved'?'res':'conf');
-  badge.textContent = past?'PASADO':c.status==='reserved'?'RESERVADO':'CONFIRMADO';
+  badge.className = 'badge '+(c.invoiced?'invoiced':past?'past':c.status==='reserved'?'res':'conf');
+  badge.textContent = c.invoiced?'✓ FACTURADO':past?'PASADO':c.status==='reserved'?'RESERVADO':'CONFIRMADO';
+  document.getElementById('d-invoiced-btn').textContent = c.invoiced?'[ MARCAR COMO NO FACTURADA ]':'[ MARCAR COMO FACTURADA ✓ ]';
   goTo('s-detail');
+}
+
+function toggleInvoiced() {
+  if (!currentConcert) return;
+  const idx = CONCERTS.findIndex(c=>c.id===currentConcert.id);
+  CONCERTS[idx].invoiced = !CONCERTS[idx].invoiced;
+  currentConcert = CONCERTS[idx];
+  saveData();
+  renderHome(); renderList(); renderStats();
+  const c = currentConcert;
+  const past = isPast(c);
+  const badge = document.getElementById('d-badge');
+  badge.className = 'badge '+(c.invoiced?'invoiced':past?'past':c.status==='reserved'?'res':'conf');
+  badge.textContent = c.invoiced?'✓ FACTURADO':past?'PASADO':c.status==='reserved'?'RESERVADO':'CONFIRMADO';
+  document.getElementById('d-invoiced-btn').textContent = c.invoiced?'[ MARCAR COMO NO FACTURADA ]':'[ MARCAR COMO FACTURADA ✓ ]';
 }
 
 function editCurrentConcert() {
@@ -674,6 +701,8 @@ function loadAjustesForm() {
   document.getElementById('adj-nif').value = EMISOR.nif;
   document.getElementById('adj-dir').value = EMISOR.dir;
   document.getElementById('adj-cp').value = EMISOR.cp;
+  document.getElementById('adj-iban').value = EMISOR.iban||'';
+  document.getElementById('adj-banco').value = EMISOR.banco||'';
   document.getElementById('adj-pag-nombre').value = PAGADOR.nombre;
   document.getElementById('adj-pag-cif').value = PAGADOR.cif;
   document.getElementById('adj-pag-dir').value = PAGADOR.dir;
@@ -686,6 +715,8 @@ function saveAjustes() {
     nif:    document.getElementById('adj-nif').value.trim()||EMISOR.nif,
     dir:    document.getElementById('adj-dir').value.trim()||EMISOR.dir,
     cp:     document.getElementById('adj-cp').value.trim()||EMISOR.cp,
+    iban:   document.getElementById('adj-iban').value.trim()||EMISOR.iban,
+    banco:  document.getElementById('adj-banco').value.trim()||EMISOR.banco,
   };
   PAGADOR = {
     nombre: document.getElementById('adj-pag-nombre').value.trim()||PAGADOR.nombre,
@@ -703,7 +734,11 @@ function saveAjustes() {
 function goToFactura() {
   if (!currentConcert) return;
   const c = currentConcert;
-  document.getElementById('f-num').value = `${c.year}-${pad(c.mN)}-${pad(c.id)}`;
+  document.getElementById('f-num').value = c.numFactura || `${c.year}-${pad(c.mN)}-${pad(c.id)}`;
+  document.getElementById('f-num').onchange = function(){
+    const idx = CONCERTS.findIndex(x=>x.id===c.id);
+    if(idx>=0){ CONCERTS[idx].numFactura = this.value; saveData(); }
+  };
   document.getElementById('f-date').textContent = `${pad(c.day)}/${pad(c.mN)}/${c.year}`;
   document.getElementById('f-concepto').value = `Actuación musical — ${c.city}, ${c.venue} (${pad(c.day)} ${MESES_LONG[c.month]} ${c.year})`;
   document.getElementById('f-base').value = '';
@@ -712,6 +747,7 @@ function goToFactura() {
   document.getElementById('f-emisor-body').innerHTML = `NIF: ${EMISOR.nif}<br>${EMISOR.dir}<br>${EMISOR.cp}`;
   document.getElementById('f-pagador-nombre').textContent = PAGADOR.nombre;
   document.getElementById('f-pagador-body').innerHTML = `CIF: ${PAGADOR.cif}<br>${PAGADOR.dir}<br>${PAGADOR.cp}`;
+  document.getElementById('f-banco-display').innerHTML = `${EMISOR.iban||'ES28 0081 2718 8400 2351 3167'}<br>${EMISOR.banco||'Banco Sabadell'}`;
   facIvaOn = true; facIrpfOn = true;
   document.getElementById('t-iva').className = 'fac-toggle on';
   document.getElementById('t-irpf').className = 'fac-toggle on';
@@ -788,8 +824,8 @@ function exportarFactura() {
 <div class="rule"></div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;padding:16px 0;">
   <div><div class="ey">Datos bancarios</div>
-  <div class="mono" style="font-size:12px;line-height:1.8;font-weight:700;">ES40 0182 4800 5902 0161 3087</div>
-  <div class="mono" style="font-size:11px;color:rgba(10,10,10,0.6);">BBVA</div></div>
+  <div class="mono" style="font-size:12px;line-height:1.8;font-weight:700;">${EMISOR.iban||'ES28 0081 2718 8400 2351 3167'}</div>
+  <div class="mono" style="font-size:11px;color:rgba(10,10,10,0.6);">${EMISOR.banco||'Banco Sabadell'}</div></div>
 </div>
 <div class="rule"></div>
 <div class="mono" style="font-size:9px;letter-spacing:1px;color:rgba(10,10,10,0.4);margin-top:16px;text-align:center;">${EMISOR.nombre} · NIF ${EMISOR.nif} · ${EMISOR.cp}</div>
